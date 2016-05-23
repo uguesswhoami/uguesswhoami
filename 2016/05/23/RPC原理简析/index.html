@@ -84,15 +84,30 @@
 
 
 
-<meta name="description" content="学习总结&amp;生活感悟">
-<meta property="og:type" content="website">
+<meta name="description" content="本文主要介绍RPC的原理并实现一个简单的例子。
+
+RPC主要原理
+什么是RPCRPC – Remote Procedure Call Protocol,是远程过程调用协议的简称。
+为什么用RPC在项目开发过程中，接口或者方法的调用分为本地调用和远程调用两种：本地调用：本地调用很简单，即普通的在一个虚拟机内或者说一个进程内的方法或者接口之间的调用；远程调用：在一个系统中会存在多个服务且部署在不同的">
+<meta property="og:type" content="article">
 <meta property="og:title" content="xiaoke's blog">
-<meta property="og:url" content="xiaoke.tech/index.html">
+<meta property="og:url" content="xiaoke.tech/2016/05/23/RPC原理简析/index.html">
 <meta property="og:site_name" content="xiaoke's blog">
-<meta property="og:description" content="学习总结&amp;生活感悟">
+<meta property="og:description" content="本文主要介绍RPC的原理并实现一个简单的例子。
+
+RPC主要原理
+什么是RPCRPC – Remote Procedure Call Protocol,是远程过程调用协议的简称。
+为什么用RPC在项目开发过程中，接口或者方法的调用分为本地调用和远程调用两种：本地调用：本地调用很简单，即普通的在一个虚拟机内或者说一个进程内的方法或者接口之间的调用；远程调用：在一个系统中会存在多个服务且部署在不同的">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1938652-0999f48136c83c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-05-23T11:18:56.778Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="xiaoke's blog">
-<meta name="twitter:description" content="学习总结&amp;生活感悟">
+<meta name="twitter:description" content="本文主要介绍RPC的原理并实现一个简单的例子。
+
+RPC主要原理
+什么是RPCRPC – Remote Procedure Call Protocol,是远程过程调用协议的简称。
+为什么用RPC在项目开发过程中，接口或者方法的调用分为本地调用和远程调用两种：本地调用：本地调用很简单，即普通的在一个虚拟机内或者说一个进程内的方法或者接口之间的调用；远程调用：在一个系统中会存在多个服务且部署在不同的">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1938652-0999f48136c83c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -110,7 +125,7 @@
   };
 </script>
 
-  <title> xiaoke's blog </title>
+  <title>  | xiaoke's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -131,9 +146,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -230,9 +243,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -253,9 +266,6 @@
             
               
                 
-                <a class="post-title-link" href="/2016/05/23/RPC原理简析/" itemprop="url">
-                  未命名
-                </a>
               
             
           </h1>
@@ -302,9 +312,7 @@
       
 
       
-        
-          
-            <blockquote>
+        <blockquote>
 <p>本文主要介绍RPC的原理并实现一个简单的例子。</p>
 </blockquote>
 <h1 id="RPC主要原理"><a href="#RPC主要原理" class="headerlink" title="RPC主要原理"></a>RPC主要原理</h1><ul>
@@ -323,16 +331,19 @@
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">refer</span><span class="params">(Class&lt;T&gt; interfaceClass, <span class="keyword">final</span> String host, <span class="keyword">final</span> <span class="keyword">int</span> port )</span></span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (interfaceClass == <span class="keyword">null</span>)&#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"interfaceClass is null"</span>);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span> (StringUtils.isEmpty(host))&#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"host is null"</span>);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span> (port &lt; <span class="number">0</span> || port &gt; <span class="number">65535</span>)&#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"port is invalid, port is:"</span> + port);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> (T)Proxy.newProxyInstance(interfaceClass.getClassLoader(), <span class="keyword">new</span> Class&lt;?&gt;[]&#123;interfaceClass&#125;, <span class="keyword">new</span> RpcInvoker(host, port));</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RpcInvoker</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String host;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> port;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RpcInvoker</span><span class="params">(String host, <span class="keyword">int</span> port)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.host = host;</span><br><span class="line">        <span class="keyword">this</span>.port = port;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span></span><br><span class="line">            <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">        Socket socket = <span class="keyword">new</span> Socket(host, port);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ObjectOutputStream objectOutputStream = <span class="keyword">new</span> ObjectOutputStream(socket.getOutputStream());</span><br><span class="line">            objectOutputStream.writeUTF(method.getName());</span><br><span class="line">            objectOutputStream.writeObject(method.getParameterTypes());</span><br><span class="line">            objectOutputStream.writeObject(args);</span><br><span class="line">            <span class="comment">//等待服务端返回数据</span></span><br><span class="line">            ObjectInputStream objectInputStream = <span class="keyword">new</span> ObjectInputStream(socket.getInputStream());</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Object result = objectInputStream.readObject();</span><br><span class="line">                <span class="keyword">if</span> (result <span class="keyword">instanceof</span> Throwable)&#123;</span><br><span class="line">                    <span class="keyword">throw</span> (Throwable) result;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> result;</span><br><span class="line">            &#125;<span class="keyword">catch</span> (Throwable e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">                objectInputStream.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Throwable e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            socket.close();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+      
+    </div>
+
+    <div>
+      
         
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
@@ -343,16 +354,15 @@
 
       
       
-        <div class="post-eof"></div>
-      
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -360,6 +370,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/23/RPC原理简析/"
+           data-title="" data-url="xiaoke.tech/2016/05/23/RPC原理简析/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -379,8 +397,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -416,6 +443,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RPC主要原理"><span class="nav-number">1.</span> <span class="nav-text">RPC主要原理</span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -512,6 +550,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
