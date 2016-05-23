@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="hexo," />
 
 
 
@@ -90,7 +90,7 @@ RPC主要原理
 什么是RPCRPC – Remote Procedure Call Protocol,是远程过程调用协议的简称。
 为什么用RPC在项目开发过程中，接口或者方法的调用分为本地调用和远程调用两种：本地调用：本地调用很简单，即普通的在一个虚拟机内或者说一个进程内的方法或者接口之间的调用；远程调用：在一个系统中会存在多个服务且部署在不同的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="xiaoke's blog">
+<meta property="og:title" content="RPC原理简析">
 <meta property="og:url" content="xiaoke.tech/2016/05/23/RPC原理简析/index.html">
 <meta property="og:site_name" content="xiaoke's blog">
 <meta property="og:description" content="本文主要介绍RPC的原理并实现一个简单的例子。
@@ -99,9 +99,9 @@ RPC主要原理
 什么是RPCRPC – Remote Procedure Call Protocol,是远程过程调用协议的简称。
 为什么用RPC在项目开发过程中，接口或者方法的调用分为本地调用和远程调用两种：本地调用：本地调用很简单，即普通的在一个虚拟机内或者说一个进程内的方法或者接口之间的调用；远程调用：在一个系统中会存在多个服务且部署在不同的">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1938652-0999f48136c83c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2016-05-23T11:18:56.778Z">
+<meta property="og:updated_time" content="2016-05-23T11:55:21.499Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="xiaoke's blog">
+<meta name="twitter:title" content="RPC原理简析">
 <meta name="twitter:description" content="本文主要介绍RPC的原理并实现一个简单的例子。
 
 RPC主要原理
@@ -125,7 +125,7 @@ RPC主要原理
   };
 </script>
 
-  <title>  | xiaoke's blog </title>
+  <title> RPC原理简析 | xiaoke's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -265,7 +265,7 @@ RPC主要原理
             
             
               
-                
+                RPC原理简析
               
             
           </h1>
@@ -277,11 +277,30 @@ RPC主要原理
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-23T19:13:11+08:00" content="2016-05-23">
+            <time itemprop="dateCreated" datetime="2016-05-23T00:00:00+08:00" content="2016-05-23">
               2016-05-23
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/RPC/" itemprop="url" rel="index">
+                    <span itemprop="name">RPC</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
@@ -318,7 +337,10 @@ RPC主要原理
 <h1 id="RPC主要原理"><a href="#RPC主要原理" class="headerlink" title="RPC主要原理"></a>RPC主要原理</h1><ul>
 <li>什么是RPC<br>RPC – Remote Procedure Call Protocol,是远程过程调用协议的简称。</li>
 <li>为什么用RPC<br>在项目开发过程中，接口或者方法的调用分为本地调用和远程调用两种：<br>本地调用：本地调用很简单，即普通的在一个虚拟机内或者说一个进程内的方法或者接口之间的调用；<br>远程调用：在一个系统中会存在多个服务且部署在不同的机器上，当A服务器应用需要调用B服务器的应用，就需要用到远程调用，让A像调用本地接口一样调用B服务器中的接口，如图所示。<br><img src="http://upload-images.jianshu.io/upload_images/1938652-0999f48136c83c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RPC通信图.png"><br>在远程调用中需要遵循一种协议，即远程过程调用协议。</li>
-<li>实现RPC需要解决的问题<br>从图中的流程来一一分解RPC需要解决的问题：<br>(1)网络传输：在底层需要进行数据的网络传输，包括需要调用接口的名称、参数、参数类型等，所以高效的网络传输是需要的；<br>(2)序列化：从图中可以看出服务器A需要将参数(包括接口名称、参数、参数类型等)传输给B服务器，在服务器接收到参数并调用相应的接口后生成返回值，并且需要将返回值通过网络回传给服务器A，而在网络中传输的是二进制，因此要将需要传输的值序列化为二进制形式，所以高效好用的序列化框架也是需要的。<br>#RPC简单实现<br>本节将给出一个简单的RPC实现，网络传输是通过裸的socket编程，序列化是用的原始的序列化方式完成。高性能的网络传输方式和序列化方式在其他文章中整理。</li>
+<li>实现RPC需要解决的问题<br>从图中的流程来一一分解RPC需要解决的问题：<br>(1)网络传输：在底层需要进行数据的网络传输，包括需要调用接口的名称、参数、参数类型等，所以高效的网络传输是需要的；<br>(2)序列化：从图中可以看出服务器A需要将参数(包括接口名称、参数、参数类型等)传输给B服务器，在服务器接收到参数并调用相应的接口后生成返回值，并且需要将返回值通过网络回传给服务器A，而在网络中传输的是二进制，因此要将需要传输的值序列化为二进制形式，所以高效好用的序列化框架也是需要的。</li>
+</ul>
+<h1 id="RPC简单实现"><a href="#RPC简单实现" class="headerlink" title="RPC简单实现"></a>RPC简单实现</h1><p>本节将给出一个简单的RPC实现，网络传输是通过裸的socket编程，序列化是用的原始的序列化方式完成。高性能的网络传输方式和序列化方式在其他文章中整理。</p>
+<ul>
 <li>服务器端<br>服务器端主要实现的功能是暴露服务，即监听客户端的调用服务请求并根据客户端的请求参数完成服务所要求的功能，并可以返回给结果给客户端。代码如下：<br><code>/** * 暴露服务
 *@param service 需要暴露的服务 
 *@param port 端口名称
@@ -349,6 +371,12 @@ RPC主要原理
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/hexo/" rel="tag">#hexo</a>
+          
+        </div>
+      
 
       
 
@@ -373,7 +401,7 @@ RPC主要原理
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2016/05/23/RPC原理简析/"
-           data-title="" data-url="xiaoke.tech/2016/05/23/RPC原理简析/">
+           data-title="RPC原理简析" data-url="xiaoke.tech/2016/05/23/RPC原理简析/">
       </div>
     
   </div>
@@ -424,7 +452,21 @@ RPC主要原理
           </div>
 
           
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
 
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
           
 
         </nav>
@@ -450,7 +492,7 @@ RPC主要原理
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RPC主要原理"><span class="nav-number">1.</span> <span class="nav-text">RPC主要原理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RPC主要原理"><span class="nav-number">1.</span> <span class="nav-text">RPC主要原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RPC简单实现"><span class="nav-number">2.</span> <span class="nav-text">RPC简单实现</span></a></li></ol></div>
             
           </div>
         </section>
