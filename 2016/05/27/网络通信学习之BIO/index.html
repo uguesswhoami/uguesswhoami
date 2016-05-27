@@ -1,0 +1,697 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="网络通信," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="在分布式系统中处处存在网络通信，分布式服务框架、分布式存储系统、分布式缓存都需要高效的网络通信来提高整个系统的运行效率。netty作为最流行的网络通信框架，基于Java NIO模型，被广泛应用于分布式系统中，因此对netty进行系统的学习。特别声明：本节大部分为李林峰的《Netty权威指南》一书的学习笔记。
+
+网络通信I/O模型
+同步阻塞
+伪异步
+同步非阻塞
+异步
+
+以上的网络通信模型特点会按">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络通信之BIO">
+<meta property="og:url" content="xiaoke.tech/2016/05/27/网络通信学习之BIO/index.html">
+<meta property="og:site_name" content="xiaoke's blog">
+<meta property="og:description" content="在分布式系统中处处存在网络通信，分布式服务框架、分布式存储系统、分布式缓存都需要高效的网络通信来提高整个系统的运行效率。netty作为最流行的网络通信框架，基于Java NIO模型，被广泛应用于分布式系统中，因此对netty进行系统的学习。特别声明：本节大部分为李林峰的《Netty权威指南》一书的学习笔记。
+
+网络通信I/O模型
+同步阻塞
+伪异步
+同步非阻塞
+异步
+
+以上的网络通信模型特点会按">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1938652-58f321f3baa74d2c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-05-27T06:02:39.483Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络通信之BIO">
+<meta name="twitter:description" content="在分布式系统中处处存在网络通信，分布式服务框架、分布式存储系统、分布式缓存都需要高效的网络通信来提高整个系统的运行效率。netty作为最流行的网络通信框架，基于Java NIO模型，被广泛应用于分布式系统中，因此对netty进行系统的学习。特别声明：本节大部分为李林峰的《Netty权威指南》一书的学习笔记。
+
+网络通信I/O模型
+同步阻塞
+伪异步
+同步非阻塞
+异步
+
+以上的网络通信模型特点会按">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1938652-58f321f3baa74d2c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 网络通信之BIO | xiaoke's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xiaoke's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                网络通信之BIO
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-27T00:00:00+08:00" content="2016-05-27">
+              2016-05-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/网络通信/" itemprop="url" rel="index">
+                    <span itemprop="name">网络通信</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/27/网络通信学习之BIO/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/27/网络通信学习之BIO/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p> 在分布式系统中处处存在网络通信，分布式服务框架、分布式存储系统、分布式缓存都需要高效的网络通信来提高整个系统的运行效率。netty作为最流行的网络通信框架，基于Java NIO模型，被广泛应用于分布式系统中，因此对netty进行系统的学习。<br>特别声明：本节大部分为李林峰的《Netty权威指南》一书的学习笔记。</p>
+</blockquote>
+<h2 id="网络通信I-O模型"><a href="#网络通信I-O模型" class="headerlink" title="网络通信I/O模型"></a>网络通信I/O模型</h2><ul>
+<li>同步阻塞</li>
+<li>伪异步</li>
+<li>同步非阻塞</li>
+<li>异步</li>
+</ul>
+<p>以上的网络通信模型特点会按照以下流程介绍：</p>
+<ul>
+<li>通信模型图</li>
+<li>server-client demo</li>
+<li>特点分析</li>
+</ul>
+<a id="more"></a>
+<h2 id="同步阻塞网络通信模型-–-BIO"><a href="#同步阻塞网络通信模型-–-BIO" class="headerlink" title="同步阻塞网络通信模型 – BIO"></a>同步阻塞网络通信模型 – BIO</h2><ul>
+<li><h3 id="网络模型图"><a href="#网络模型图" class="headerlink" title="网络模型图"></a>网络模型图</h3></li>
+</ul>
+<p>下图为同步阻塞网络通信模型图。<br><img src="http://upload-images.jianshu.io/upload_images/1938652-58f321f3baa74d2c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="同步阻塞通信模型.png"></p>
+<ul>
+<li><h3 id="Server-Client-demo"><a href="#Server-Client-demo" class="headerlink" title="Server-Client demo"></a>Server-Client demo</h3><p>该demo实现的功能是最简单的c-s网络通信，即客户端请求连接，并向服务器端发出请求，服务器端接收到请求后处理请求并返回结果给客户端。</p>
+</li>
+<li>Server端<br>同步阻塞模式的Server端在创建serverSocket后会监听端口，等待接收accept客户端的请求，在等待阶段accept会阻塞，当有客户端请求时，会创建socket并开启处理请求线程；<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class TimeServer&#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws IOException&#123;</span><br><span class="line">        ServerSocket serverSocket = null;</span><br><span class="line">        int port = 8080;</span><br><span class="line">        try &#123;</span><br><span class="line">            serverSocket = new ServerSocket(port);</span><br><span class="line"></span><br><span class="line">            Socket socket = null;</span><br><span class="line">            while (true)&#123;</span><br><span class="line">                //循环接收客户端请求</span><br><span class="line">                socket = serverSocket.accept();</span><br><span class="line">                //当接收到请求后,处理请求(接收消息,处理消息)</span><br><span class="line">                new Thread(new TimeServerHandler(socket)).start();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;finally &#123;</span><br><span class="line">            if (serverSocket != null)&#123;</span><br><span class="line">                serverSocket.close();</span><br><span class="line">                serverSocket = null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>实际处理请求代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 实际的处理请求类</span><br><span class="line"> */</span><br><span class="line">public class TimeServerHandler implements Runnable&#123;</span><br><span class="line"></span><br><span class="line">    private Socket socket;</span><br><span class="line">    public TimeServerHandler(Socket socket)&#123;</span><br><span class="line">        this.socket = socket;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void run()&#123;</span><br><span class="line">        //创建输入流、输出流</span><br><span class="line">        ObjectInputStream in = null;</span><br><span class="line">        ObjectOutputStream out = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            //获取输入流输出流</span><br><span class="line">            in = new ObjectInputStream(this.socket.getInputStream());</span><br><span class="line">            out = new ObjectOutputStream(this.socket.getOutputStream());</span><br><span class="line"></span><br><span class="line">            //开始读取消息</span><br><span class="line">            String message = null;</span><br><span class="line">            String currentTime = null;</span><br><span class="line">            while (true)&#123;</span><br><span class="line">                Object obj = in.readObject();</span><br><span class="line">                if (obj instanceof Throwable)&#123;</span><br><span class="line">                    System.out.println(&quot;异常。。。&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">                message = obj == null? null : obj.toString();</span><br><span class="line">                if (message == null) break;</span><br><span class="line">                //处理消息</span><br><span class="line">                System.out.println(&quot;time server recv message: &quot; + message);</span><br><span class="line">                currentTime = &quot;QUERY TIME ORDER&quot;.equals(message)? new Date(System.currentTimeMillis()).toString(): &quot;BAD&quot;;</span><br><span class="line">                //处理后消息发给客户端</span><br><span class="line">                out.writeObject(currentTime);</span><br><span class="line">            &#125;</span><br><span class="line">            try &#123;</span><br><span class="line">                Thread.sleep(100);</span><br><span class="line">            &#125;catch (InterruptedException e)&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;finally&#123;</span><br><span class="line">            //关闭流</span><br><span class="line">            if (in != null)&#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    in.close();</span><br><span class="line">                &#125;catch (Exception e)&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (out != null)&#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    out.close();</span><br><span class="line">                    out = null;</span><br><span class="line">                &#125;catch (Exception e)&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if(this.socket != null)&#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    this.socket.close();</span><br><span class="line">                &#125;catch (Exception e)&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                this.socket = null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Client端</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">public class TimeClient&#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line"></span><br><span class="line">        int port = 8080;</span><br><span class="line">        Socket socket = null;</span><br><span class="line">        ObjectOutputStream out = null;</span><br><span class="line">        ObjectInputStream in = null;</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            socket = new Socket(&quot;127.0.0.1&quot;, port);</span><br><span class="line">            out = new ObjectOutputStream(socket.getOutputStream());</span><br><span class="line">            out.writeObject(&quot;QUERY TIME ORDER&quot;);</span><br><span class="line">            out.writeObject(null);</span><br><span class="line">            in = new ObjectInputStream(socket.getInputStream());</span><br><span class="line">            String resp = in.readObject().toString();</span><br><span class="line">            System.out.println(&quot;recv msg: &quot; + resp);</span><br><span class="line"></span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line"></span><br><span class="line">        &#125;finally &#123;</span><br><span class="line">            //关闭流</span><br><span class="line"></span><br><span class="line">            if (out != null)&#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    out.close();</span><br><span class="line">                    out = null;</span><br><span class="line">                &#125;catch (Exception e)&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (in != null)&#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    in.close();</span><br><span class="line">                &#125;catch (Exception e)&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if(socket != null)&#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    socket.close();</span><br><span class="line">                &#125;catch (Exception e)&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                socket = null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><h3 id="同步阻塞网络通信模型特点"><a href="#同步阻塞网络通信模型特点" class="headerlink" title="同步阻塞网络通信模型特点"></a>同步阻塞网络通信模型特点</h3><p>由以上的server-client demo可以看出同步阻塞模型有以下特点：</p>
+<ul>
+<li>Server端在Client端请求之前一直处于阻塞状态；</li>
+<li>当Client端有请求之后会创建新的线程来处理请求并返回请求处理结果；</li>
+</ul>
+<p>这样的特点就造成了以下几点弊端：</p>
+</li>
+<li><p>当Client端的请求数量特别多时，这个时候就需要开辟很多个线程来处理请求，线程的创建和销毁都是非常消耗资源的，这样就会造成服务器端内存被撑爆或者是CPU占用率过高等状况，给用户造成的影响就是请求超时。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/网络通信/" rel="tag">#网络通信</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/25/motan框架源码解析(1)/" rel="next" title="motan框架源码解析(1)">
+                <i class="fa fa-chevron-left"></i> motan框架源码解析(1)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/27/网络通信学习之BIO/"
+           data-title="网络通信之BIO" data-url="xiaoke.tech/2016/05/27/网络通信学习之BIO/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="xiaoke" />
+          <p class="site-author-name" itemprop="name">xiaoke</p>
+          <p class="site-description motion-element" itemprop="description">学习总结&生活感悟</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络通信I-O模型"><span class="nav-number">1.</span> <span class="nav-text">网络通信I/O模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步阻塞网络通信模型-–-BIO"><span class="nav-number">2.</span> <span class="nav-text">同步阻塞网络通信模型 – BIO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络模型图"><span class="nav-number">2.1.</span> <span class="nav-text">网络模型图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Server-Client-demo"><span class="nav-number">2.2.</span> <span class="nav-text">Server-Client demo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步阻塞网络通信模型特点"><span class="nav-number">2.3.</span> <span class="nav-text">同步阻塞网络通信模型特点</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiaoke</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xiaoketech"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
