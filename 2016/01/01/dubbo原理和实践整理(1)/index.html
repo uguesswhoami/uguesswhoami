@@ -1,0 +1,774 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="dubbo&amp;#x6846;&amp;#x67B6;&amp;#x5728;&amp;#x5206;&amp;#x5E03;&amp;#x5F0F;&amp;#x7CFB;&amp;#x7EDF;&amp;#x4E2D;&amp;#x5E94;&amp;#x7528;&amp;#x5E7F;&amp;#x6CDB;&amp;#xFF0C;&amp;#x5176;&amp;#x6838;&amp;#x5FC3;&amp;#x4E3A;&amp;#x670D;&amp;#x52A1;&amp;#x7684;RPC&amp;#x8FDC;&amp;#x7A0B;&amp;#x8C03">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dubbo原理和实践整理（1）">
+<meta property="og:url" content="xiaoke.tech/2016/01/01/dubbo原理和实践整理(1)/index.html">
+<meta property="og:site_name" content="xiaoke's blog">
+<meta property="og:description" content="dubbo&amp;#x6846;&amp;#x67B6;&amp;#x5728;&amp;#x5206;&amp;#x5E03;&amp;#x5F0F;&amp;#x7CFB;&amp;#x7EDF;&amp;#x4E2D;&amp;#x5E94;&amp;#x7528;&amp;#x5E7F;&amp;#x6CDB;&amp;#xFF0C;&amp;#x5176;&amp;#x6838;&amp;#x5FC3;&amp;#x4E3A;&amp;#x670D;&amp;#x52A1;&amp;#x7684;RPC&amp;#x8FDC;&amp;#x7A0B;&amp;#x8C03">
+<meta property="og:updated_time" content="2016-07-31T07:41:17.042Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="dubbo原理和实践整理（1）">
+<meta name="twitter:description" content="dubbo&amp;#x6846;&amp;#x67B6;&amp;#x5728;&amp;#x5206;&amp;#x5E03;&amp;#x5F0F;&amp;#x7CFB;&amp;#x7EDF;&amp;#x4E2D;&amp;#x5E94;&amp;#x7528;&amp;#x5E7F;&amp;#x6CDB;&amp;#xFF0C;&amp;#x5176;&amp;#x6838;&amp;#x5FC3;&amp;#x4E3A;&amp;#x670D;&amp;#x52A1;&amp;#x7684;RPC&amp;#x8FDC;&amp;#x7A0B;&amp;#x8C03">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> dubbo原理和实践整理（1） | xiaoke's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xiaoke's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                dubbo原理和实践整理（1）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-01-01T00:00:00+08:00" content="2016-01-01">
+              2016-01-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/dubbo/" itemprop="url" rel="index">
+                    <span itemprop="name">dubbo</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/01/dubbo原理和实践整理(1)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/01/dubbo原理和实践整理(1)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>dubbo&#x6846;&#x67B6;&#x5728;&#x5206;&#x5E03;&#x5F0F;&#x7CFB;&#x7EDF;&#x4E2D;&#x5E94;&#x7528;&#x5E7F;&#x6CDB;&#xFF0C;&#x5176;&#x6838;&#x5FC3;&#x4E3A;&#x670D;&#x52A1;&#x7684;RPC&#x8FDC;&#x7A0B;&#x8C03;&#x7528;&#xFF0C;&#x5E76;&#x5728;&#x5176;&#x57FA;&#x7840;&#x4E4B;&#x4E0A;&#x5B9E;&#x73B0;&#x4E86;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x3001;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x3001;&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x3001;&#x670D;&#x52A1;&#x76D1;&#x63A7;&#x7B49;&#x529F;&#x80FD;&#x3002;</p>
+</blockquote>
+ <a id="more"></a>
+<h3 id="dubbo&#x8D85;&#x65F6;&#x5904;&#x7406;"><a href="#dubbo&#x8D85;&#x65F6;&#x5904;&#x7406;" class="headerlink" title="dubbo&#x8D85;&#x65F6;&#x5904;&#x7406;"></a>dubbo&#x8D85;&#x65F6;&#x5904;&#x7406;</h3><ul>
+<li><p>dubbo &#x8D85;&#x65F6;&#x6E90;&#x7801;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    protected Result doInvoke(final Invocation invocation) throws Throwable {</span><br><span class="line">        RpcInvocation inv = (RpcInvocation) invocation;</span><br><span class="line">        final String methodName = RpcUtils.getMethodName(invocation);</span><br><span class="line">        inv.setAttachment(Constants.PATH_KEY, getUrl().getPath());</span><br><span class="line">        inv.setAttachment(Constants.VERSION_KEY, version);</span><br><span class="line">        </span><br><span class="line">        ExchangeClient currentClient;</span><br><span class="line">        if (clients.length == 1) {</span><br><span class="line">            currentClient = clients[0];</span><br><span class="line">        } else {</span><br><span class="line">            currentClient = clients[index.getAndIncrement() % clients.length];</span><br><span class="line">        }</span><br><span class="line">        try {</span><br><span class="line">            boolean isAsync = RpcUtils.isAsync(getUrl(), invocation);</span><br><span class="line">            boolean isOneway = RpcUtils.isOneway(getUrl(), invocation);</span><br><span class="line">            int timeout = getUrl().getMethodParameter(methodName, Constants.TIMEOUT_KEY,Constants.DEFAULT_TIMEOUT);</span><br><span class="line">            if (isOneway) {</span><br><span class="line">            	boolean isSent = getUrl().getMethodParameter(methodName, Constants.SENT_KEY, false);</span><br><span class="line">                currentClient.send(inv, isSent);</span><br><span class="line">                RpcContext.getContext().setFuture(null);</span><br><span class="line">                return new RpcResult();</span><br><span class="line">            } else if (isAsync) {</span><br><span class="line">            	ResponseFuture future = currentClient.request(inv, timeout) ;</span><br><span class="line">                RpcContext.getContext().setFuture(new FutureAdapter&lt;Object&gt;(future));</span><br><span class="line">                return new RpcResult();</span><br><span class="line">            } else {</span><br><span class="line">            	RpcContext.getContext().setFuture(null);</span><br><span class="line">                return (Result) currentClient.request(inv, timeout).get();</span><br><span class="line">            }</span><br><span class="line">        } catch (TimeoutException e) {</span><br><span class="line">            throw new RpcException(RpcException.TIMEOUT_EXCEPTION, &quot;Invoke remote method timeout. method: &quot; + invocation.getMethodName() + &quot;, provider: &quot; + getUrl() + &quot;, cause: &quot; + e.getMessage(), e);</span><br><span class="line">        } catch (RemotingException e) {</span><br><span class="line">            throw new RpcException(RpcException.NETWORK_EXCEPTION, &quot;Failed to invoke remote method: &quot; + invocation.getMethodName() + &quot;, provider: &quot; + getUrl() + &quot;, cause: &quot; + e.getMessage(), e);</span><br><span class="line">        }</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>dubbo&#x91CD;&#x8BD5;&#x6E90;&#x7801;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"> public Result doInvoke(Invocation invocation, final List&lt;Invoker&lt;T&gt;&gt; invokers, LoadBalance loadbalance) throws RpcException {</span><br><span class="line">    	List&lt;Invoker&lt;T&gt;&gt; copyinvokers = invokers;</span><br><span class="line">    	checkInvokers(copyinvokers, invocation);</span><br><span class="line">        int len = getUrl().getMethodParameter(invocation.getMethodName(), Constants.RETRIES_KEY, Constants.DEFAULT_RETRIES) + 1;</span><br><span class="line">        if (len &lt;= 0) {</span><br><span class="line">            len = 1;</span><br><span class="line">        }</span><br><span class="line">        // retry loop.</span><br><span class="line">        RpcException le = null; // last exception.</span><br><span class="line">        List&lt;Invoker&lt;T&gt;&gt; invoked = new ArrayList&lt;Invoker&lt;T&gt;&gt;(copyinvokers.size()); // invoked invokers.</span><br><span class="line">        Set&lt;String&gt; providers = new HashSet&lt;String&gt;(len);</span><br><span class="line">        for (int i = 0; i &lt; len; i++) {</span><br><span class="line">        	//&#x91CD;&#x8BD5;&#x65F6;&#xFF0C;&#x8FDB;&#x884C;&#x91CD;&#x65B0;&#x9009;&#x62E9;&#xFF0C;&#x907F;&#x514D;&#x91CD;&#x8BD5;&#x65F6;invoker&#x5217;&#x8868;&#x5DF2;&#x53D1;&#x751F;&#x53D8;&#x5316;.</span><br><span class="line">        	//&#x6CE8;&#x610F;&#xFF1A;&#x5982;&#x679C;&#x5217;&#x8868;&#x53D1;&#x751F;&#x4E86;&#x53D8;&#x5316;&#xFF0C;&#x90A3;&#x4E48;invoked&#x5224;&#x65AD;&#x4F1A;&#x5931;&#x6548;&#xFF0C;&#x56E0;&#x4E3A;invoker&#x793A;&#x4F8B;&#x5DF2;&#x7ECF;&#x6539;&#x53D8;</span><br><span class="line">        	if (i &gt; 0) {</span><br><span class="line">        		checkWhetherDestroyed();</span><br><span class="line">        		copyinvokers = list(invocation);</span><br><span class="line">        		//&#x91CD;&#x65B0;&#x68C0;&#x67E5;&#x4E00;&#x4E0B;</span><br><span class="line">        		checkInvokers(copyinvokers, invocation);</span><br><span class="line">        	}</span><br><span class="line">            Invoker&lt;T&gt; invoker = select(loadbalance, invocation, copyinvokers, invoked);</span><br><span class="line">            invoked.add(invoker);</span><br><span class="line">            RpcContext.getContext().setInvokers((List)invoked);</span><br><span class="line">            try {</span><br><span class="line">                Result result = invoker.invoke(invocation);</span><br><span class="line">                if (le != null &amp;&amp; logger.isWarnEnabled()) {</span><br><span class="line">                    logger.warn(&quot;Although retry the method &quot; + invocation.getMethodName()</span><br><span class="line">                            + &quot; in the service &quot; + getInterface().getName()</span><br><span class="line">                            + &quot; was successful by the provider &quot; + invoker.getUrl().getAddress()</span><br><span class="line">                            + &quot;, but there have been failed providers &quot; + providers </span><br><span class="line">                            + &quot; (&quot; + providers.size() + &quot;/&quot; + copyinvokers.size()</span><br><span class="line">                            + &quot;) from the registry &quot; + directory.getUrl().getAddress()</span><br><span class="line">                            + &quot; on the consumer &quot; + NetUtils.getLocalHost()</span><br><span class="line">                            + &quot; using the dubbo version &quot; + Version.getVersion() + &quot;. Last error is: &quot;</span><br><span class="line">                            + le.getMessage(), le);</span><br><span class="line">                }</span><br><span class="line">                return result;</span><br><span class="line">            } catch (RpcException e) {</span><br><span class="line">                if (e.isBiz()) { // biz exception.</span><br><span class="line">                    throw e;</span><br><span class="line">                }</span><br><span class="line">                le = e;</span><br><span class="line">            } catch (Throwable e) {</span><br><span class="line">                le = new RpcException(e.getMessage(), e);</span><br><span class="line">            } finally {</span><br><span class="line">                providers.add(invoker.getUrl().getAddress());</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        throw new RpcException(le != null ? le.getCode() : 0, &quot;Failed to invoke the method &quot;</span><br><span class="line">                + invocation.getMethodName() + &quot; in the service &quot; + getInterface().getName() </span><br><span class="line">                + &quot;. Tried &quot; + len + &quot; times of the providers &quot; + providers </span><br><span class="line">                + &quot; (&quot; + providers.size() + &quot;/&quot; + copyinvokers.size() </span><br><span class="line">                + &quot;) from the registry &quot; + directory.getUrl().getAddress()</span><br><span class="line">                + &quot; on the consumer &quot; + NetUtils.getLocalHost() + &quot; using the dubbo version &quot;</span><br><span class="line">                + Version.getVersion() + &quot;. Last error is: &quot;</span><br><span class="line">                + (le != null ? le.getMessage() : &quot;&quot;), le != null &amp;&amp; le.getCause() != null ? le.getCause() : le);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>provider&#x7AEF;&#x57FA;&#x672C;&#x914D;&#x7F6E;&#xFF1A;</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:application name=&quot;${application.name}&quot; owner=&quot;${dubbo.application.owner}&quot;/&gt;</span><br><span class="line"></span><br><span class="line">&lt;dubbo:protocol name=&quot;dubbo&quot; port=&quot;${dubbo.service.provider.port}&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;dubbo:registry protocol=&quot;zookeeper&quot; address=&quot;${dubbo.zk.servers}&quot; group=&quot;${dubbo.zk.group}&quot; client=&quot;zkclient&quot;/&gt;</span><br><span class="line"></span><br><span class="line">&lt;dubbo:monitor address=&quot;${dubbo.monitor.address}&quot;/&gt;</span><br><span class="line"></span><br><span class="line">&lt;dubbo:service interface=&quot;com.xiaoke.dubbo.DemoService&quot; ref=&quot;demoService&quot; loadbalance=&quot;random&quot; timeout=&quot;3000&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p><code>&#x5F53;provider&#x7AEF;&#x914D;&#x7F6E;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3001;&#x91CD;&#x8BD5;&#x6B21;&#x6570;&#x540E;,&#x5982;&#x679C;consumer&#x7AEF;&#x8BF7;&#x6C42;&gt;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x5C31;&#x4F1A;&#x91CD;&#x8BD5;,&gt;&#x91CD;&#x8BD5;&#x6B21;&#x6570;&#x540E;&#x62A5;&#x5F02;&#x5E38;</code></p>
+<p><code>&#x5F53;provider&#x7AEF;&#x672A;&#x914D;&#x7F6E;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3001;&#x91CD;&#x8BD5;&#x6B21;&#x6570;&#x6216;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x8BBE;&#x7F6E;&#x4E3A;0&#x65F6;,&#x9ED8;&#x8BA4;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x4E3A;1000ms, &#x9ED8;&#x8BA4;&#x91CD;&#x8BD5;&#x6B21;&#x6570;&#x4E3A;2&#x6B21;,</code></p>
+<p><code>&lt;dubbo:service interface=&quot;com.xiaoke.dubbo.DemoService&quot; ref=&quot;demoService&quot; loadbalance=&quot;random&quot; retries=&quot;0&quot;/&gt;</code></p>
+<ul>
+<li><p>dubbo &#x8D85;&#x65F6;&#x91CD;&#x8BD5;&#x673A;&#x5236;&#x5BFC;&#x81F4;&#x7684;&#x96EA;&#x5D29;</p>
+<ul>
+<li><p>&#x573A;&#x666F;</p>
+<ul>
+<li>provider&#x7AEF;<code>timeout</code>&#x8BBE;&#x7F6E;&#x4E3A;<code>2000ms</code>,<code>retries</code>&#x8BBE;&#x7F6E;&#x4E3A;<code>3</code>;</li>
+<li>provider&#x7AEF;&#x670D;&#x52A1;&#x5904;&#x7406;&#x65F6;&#x95F4;&#x4E3A;<code>3000ms</code></li>
+<li>&#x6B64;&#x65F6;consumer&#x7AEF;&#x8C03;&#x7528;dubbo&#x670D;&#x52A1;&#x4F1A;&#x9020;&#x6210;&#x8FDE;&#x63A5;&#x8D85;&#x65F6;&#x8FDB;&#x800C;&#x91CD;&#x8BD5;,&#x4E5F;&#x5C31;&#x662F;consumer&#x7AEF;&#x5171;&#x53D1;&#x8D77;4&#x6B21;&#x8FDE;&#x63A5;&#x8BF7;&#x6C42;,provider&#x7AEF;&#x9700;&#x6709;&#x56DB;&#x4E2A;&#x7EBF;&#x7A0B;&#x6765;&#x5904;&#x7406;&#x8BF7;&#x6C42;,&#x589E;&#x52A0;&#x4E86;<code>4</code>&#x500D;&#xFF0C;&#x91CD;&#x8BD5;&#x673A;&#x5236;&#x4F1A;&#x4E0D;&#x65AD;&#x653E;&#x5927;&#x8FDE;&#x63A5;&#x8BF7;&#x6C42;&#x3002;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>dubbo&#x8D85;&#x65F6;&#x91CD;&#x8BD5;&#x673A;&#x5236;&#x603B;&#x7ED3;</p>
+<ul>
+<li>dubbo&#x9ED8;&#x8BA4;<code>timeout=1000ms</code>,&#x9ED8;&#x8BA4;<code>retries=2(&#x4E0D;&#x5305;&#x62EC;&#x672C;&#x8EAB;&#x8C03;&#x7528;&#x7684;1&#x6B21;)</code>,&#x6240;&#x4EE5;&#x8981;&#x663E;&#x5F0F;&#x914D;&#x7F6E;;</li>
+<li>&#x6839;&#x636E;provider&#x7AEF;&#x7684;&#x5B9E;&#x9645;&#x4E1A;&#x52A1;&#x5904;&#x7406;&#x6765;&#x8BBE;&#x7F6E;<code>timeout</code>;</li>
+<li><code>retries</code>&#x5C3D;&#x91CF;&#x8BBE;&#x7F6E;&#x4E3A;0,&#x5982;&#x679C;&#x9700;&#x8981;&#x8BBE;&#x7F6E;,&#x5219;&#x5E94;&#x4FDD;&#x8BC1;provider&#x7AEF;&#x4E1A;&#x52A1;&#x7684;&#x5E42;&#x7B49;&#x6027;;</li>
+<li>&#x5982;&#x679C;&#x8981;&#x914D;&#x7F6E;<code>retries</code>,&#x5219;&#x5E94;&#x9632;&#x6B62;dubbo&#x670D;&#x52A1;&#x8D85;&#x65F6;&#x91CD;&#x8BD5;&#x5BFC;&#x81F4;&#x7684;&#x670D;&#x52A1;&#x96EA;&#x5D29;&#x3002;</li>
+</ul>
+</li>
+</ul>
+<h3 id="dubbo&#x7684;&#x542F;&#x52A8;&#x65F6;&#x68C0;&#x67E5;"><a href="#dubbo&#x7684;&#x542F;&#x52A8;&#x65F6;&#x68C0;&#x67E5;" class="headerlink" title="dubbo&#x7684;&#x542F;&#x52A8;&#x65F6;&#x68C0;&#x67E5;"></a>dubbo&#x7684;&#x542F;&#x52A8;&#x65F6;&#x68C0;&#x67E5;</h3><blockquote>
+<p>dubbo&#x4F1A;&#x5728;&#x542F;&#x52A8;&#x65F6;&#x68C0;&#x67E5;&#x670D;&#x52A1;&#x662F;&#x5426;&#x53EF;&#x7528;,&#x5F53;&#x670D;&#x52A1;&#x4E0D;&#x53EF;&#x7528;&#x65F6;&#x62A5;&#x5F02;&#x5E38;,&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;<code>check=&quot;true&quot;</code></p>
+</blockquote>
+<ul>
+<li><p>&#x914D;&#x7F6E;&#x5982;&#x4E0B;:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:reference interface=&quot;com.xiaoke.dubbo.DemoService&quot; id=&quot;demoService&quot; check=&quot;false&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p>&#x505A;&#x4EE5;&#x4E0A;&#x914D;&#x7F6E;&#x540E;,&#x4E0D;&#x4F1A;&#x505A;&#x542F;&#x52A8;&#x65F6;&#x68C0;&#x67E5;,&#x5728;&#x542F;&#x52A8;&#x65F6;&#x5982;&#x679C;&#x670D;&#x52A1;&#x8FD8;&#x6CA1;&#x6709;&#x542F;&#x52A8;&#x4E0D;&#x4F1A;&#x629B;&#x51FA;&#x5F02;&#x5E38;,&#x53EA;&#x4F1A;&#x5728;&#x8BE5;&#x670D;&#x52A1;&#x88AB;&#x8C03;&#x7528;&#x7684;&#x65F6;&#x5019;&#x624D;&#x4F1A;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x3002;</p>
+</li>
+<li><p>dubbo&#x542F;&#x52A8;&#x65F6;&#x68C0;&#x67E5;&#x603B;&#x7ED3;</p>
+<ul>
+<li>&#x5EFA;&#x8BAE;&#x8FD8;&#x662F;&#x4F7F;&#x7528;&#x9ED8;&#x8BA4;&#x7684;<code>check=&quot;true&quot;</code>,&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x5C3D;&#x65E9;&#x7684;&#x53D1;&#x73B0;&#x95EE;&#x9898;</li>
+<li>&#x8FD9;&#x6837;&#x5728;&#x7EBF;&#x4E0A;&#x53D1;&#x5E03;&#x65F6;&#x5C31;&#x8981;&#x6CE8;&#x610F;&#x5404;&#x4E2A;&#x670D;&#x52A1;&#x4E4B;&#x95F4;&#x7684;&#x4F9D;&#x8D56;&#x5148;&#x540E;&#x5173;&#x7CFB;,&#x4EE5;&#x514D;&#x5728;&#x7EBF;&#x4E0A;&#x53D1;&#x5E03;&#x62A5;&#x5F02;&#x5E38;</li>
+</ul>
+</li>
+</ul>
+<h3 id="dubbo&#x7EBF;&#x7A0B;&#x6A21;&#x578B;&#x914D;&#x7F6E;"><a href="#dubbo&#x7EBF;&#x7A0B;&#x6A21;&#x578B;&#x914D;&#x7F6E;" class="headerlink" title="dubbo&#x7EBF;&#x7A0B;&#x6A21;&#x578B;&#x914D;&#x7F6E;"></a>dubbo&#x7EBF;&#x7A0B;&#x6A21;&#x578B;&#x914D;&#x7F6E;</h3><ul>
+<li><p>dubbo&#x7EBF;&#x7A0B;&#x6A21;&#x578B;&#x539F;&#x7406;</p>
+</li>
+<li><p>dubbo&#x7EBF;&#x7A0B;&#x6A21;&#x578B;&#x914D;&#x7F6E;</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:protocol name=&quot;dubbo&quot; dispatcher=&quot;all&quot; threadpool=&quot;fixed&quot; threads=&quot;100&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>dispatcher &#x5404;&#x79CD;&#x914D;&#x7F6E; <code>&#x9ED8;&#x8BA4;=all</code> <code>&lt;&#x4EE5;&#x4E0B;&#x6458;&#x6284;&#x81EA;dubbo&#x6587;&#x6863;&gt;</code></p>
+<ul>
+<li>all &#x6240;&#x6709;&#x6D88;&#x606F;&#x90FD;&#x6D3E;&#x53D1;&#x5230;&#x7EBF;&#x7A0B;&#x6C60;&#xFF0C;&#x5305;&#x62EC;&#x8BF7;&#x6C42;&#xFF0C;&#x54CD;&#x5E94;&#xFF0C;&#x8FDE;&#x63A5;&#x4E8B;&#x4EF6;&#xFF0C;&#x65AD;&#x5F00;&#x4E8B;&#x4EF6;&#xFF0C;&#x5FC3;&#x8DF3;&#x7B49;&#x3002;</li>
+<li>direct &#x6240;&#x6709;&#x6D88;&#x606F;&#x90FD;&#x4E0D;&#x6D3E;&#x53D1;&#x5230;&#x7EBF;&#x7A0B;&#x6C60;&#xFF0C;&#x5168;&#x90E8;&#x5728;IO&#x7EBF;&#x7A0B;&#x4E0A;&#x76F4;&#x63A5;&#x6267;&#x884C;&#x3002;</li>
+<li>message &#x53EA;&#x6709;&#x8BF7;&#x6C42;&#x54CD;&#x5E94;&#x6D88;&#x606F;&#x6D3E;&#x53D1;&#x5230;&#x7EBF;&#x7A0B;&#x6C60;&#xFF0C;&#x5176;&#x5B83;&#x8FDE;&#x63A5;&#x65AD;&#x5F00;&#x4E8B;&#x4EF6;&#xFF0C;&#x5FC3;&#x8DF3;&#x7B49;&#x6D88;&#x606F;&#xFF0C;&#x76F4;&#x63A5;&#x5728;IO&#x7EBF;&#x7A0B;&#x4E0A;&#x6267;&#x884C;&#x3002;</li>
+<li>execution &#x53EA;&#x8BF7;&#x6C42;&#x6D88;&#x606F;&#x6D3E;&#x53D1;&#x5230;&#x7EBF;&#x7A0B;&#x6C60;&#xFF0C;&#x4E0D;&#x542B;&#x54CD;&#x5E94;&#xFF0C;&#x54CD;&#x5E94;&#x548C;&#x5176;&#x5B83;&#x8FDE;&#x63A5;&#x65AD;&#x5F00;&#x4E8B;&#x4EF6;&#xFF0C;&#x5FC3;&#x8DF3;&#x7B49;&#x6D88;&#x606F;&#xFF0C;&#x76F4;&#x63A5;&#x5728;IO&#x7EBF;&#x7A0B;&#x4E0A;&#x6267;&#x884C;&#x3002;</li>
+<li>connection &#x5728;IO&#x7EBF;&#x7A0B;&#x4E0A;&#xFF0C;&#x5C06;&#x8FDE;&#x63A5;&#x65AD;&#x5F00;&#x4E8B;&#x4EF6;&#x653E;&#x5165;&#x961F;&#x5217;&#xFF0C;&#x6709;&#x5E8F;&#x9010;&#x4E2A;&#x6267;&#x884C;&#xFF0C;&#x5176;&#x5B83;&#x6D88;&#x606F;&#x6D3E;&#x53D1;&#x5230;&#x7EBF;&#x7A0B;&#x6C60;&#x3002;</li>
+</ul>
+</li>
+<li><p>threadpool &#x5404;&#x79CD;&#x914D;&#x7F6E; <code>&#x9ED8;&#x8BA4;=fixed</code> <code>&lt;&#x4EE5;&#x4E0B;&#x6458;&#x6284;&#x81EA;dubbo&#x6587;&#x6863;&gt;</code></p>
+<ul>
+<li>fixed &#x56FA;&#x5B9A;&#x5927;&#x5C0F;&#x7EBF;&#x7A0B;&#x6C60;&#xFF0C;&#x542F;&#x52A8;&#x65F6;&#x5EFA;&#x7ACB;&#x7EBF;&#x7A0B;&#xFF0C;&#x4E0D;&#x5173;&#x95ED;&#xFF0C;&#x4E00;&#x76F4;&#x6301;&#x6709;&#x3002;(&#x7F3A;&#x7701;)</li>
+<li>cached &#x7F13;&#x5B58;&#x7EBF;&#x7A0B;&#x6C60;&#xFF0C;&#x7A7A;&#x95F2;&#x4E00;&#x5206;&#x949F;&#x81EA;&#x52A8;&#x5220;&#x9664;&#xFF0C;&#x9700;&#x8981;&#x65F6;&#x91CD;&#x5EFA;&#x3002;</li>
+<li>limited &#x53EF;&#x4F38;&#x7F29;&#x7EBF;&#x7A0B;&#x6C60;&#xFF0C;&#x4F46;&#x6C60;&#x4E2D;&#x7684;&#x7EBF;&#x7A0B;&#x6570;&#x53EA;&#x4F1A;&#x589E;&#x957F;&#x4E0D;&#x4F1A;&#x6536;&#x7F29;&#x3002;(&#x4E3A;&#x907F;&#x514D;&#x6536;&#x7F29;&#x65F6;&#x7A81;&#x7136;&#x6765;&#x4E86;&#x5927;&#x6D41;&#x91CF;&#x5F15;&#x8D77;&#x7684;&#x6027;&#x80FD;&#x95EE;&#x9898;)&#x3002;</li>
+</ul>
+</li>
+<li><p>dubbo&#x7EBF;&#x7A0B;&#x6A21;&#x578B;&#x914D;&#x7F6E;&#x603B;&#x7ED3;</p>
+<ul>
+<li>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B; <code>threadpool=fixed, threads=200</code></li>
+<li>&#x5982;&#x679C;&#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x7684;&#x903B;&#x8F91;&#x80FD;&#x8FC5;&#x901F;&#x5B8C;&#x6210;&#xFF0C;&#x5E76;&#x4E14;&#x4E0D;&#x4F1A;&#x53D1;&#x8D77;&#x65B0;&#x7684;IO&#x8BF7;&#x6C42;&#xFF0C;&#x6BD4;&#x5982;&#x53EA;&#x662F;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x8BB0;&#x4E2A;&#x6807;&#x8BC6;&#xFF0C;&#x5219;&#x76F4;&#x63A5;&#x5728;IO&#x7EBF;&#x7A0B;&#x4E0A;&#x5904;&#x7406;&#x66F4;&#x5FEB;&#xFF0C;&#x56E0;&#x4E3A;&#x51CF;&#x5C11;&#x4E86;&#x7EBF;&#x7A0B;&#x6C60;&#x8C03;&#x5EA6;&#x3002;</li>
+<li>&#x4F46;&#x5982;&#x679C;&#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x903B;&#x8F91;&#x8F83;&#x6162;&#xFF0C;&#x6216;&#x8005;&#x9700;&#x8981;&#x53D1;&#x8D77;&#x65B0;&#x7684;IO&#x8BF7;&#x6C42;&#xFF0C;&#x6BD4;&#x5982;&#x9700;&#x8981;&#x67E5;&#x8BE2;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5219;&#x5FC5;&#x987B;&#x6D3E;&#x53D1;&#x5230;&#x7EBF;&#x7A0B;&#x6C60;&#xFF0C;&#x5426;&#x5219;IO&#x7EBF;&#x7A0B;&#x963B;&#x585E;&#xFF0C;&#x5C06;&#x5BFC;&#x81F4;&#x4E0D;&#x80FD;&#x63A5;&#x6536;&#x5176;&#x5B83;&#x8BF7;&#x6C42;&#x3002;</li>
+<li>&#x91CD;&#x5199;&#x7EBF;&#x7A0B;&#x6C60;(&#x6BD4;&#x5982;&#x8981;&#x5B9E;&#x73B0;&#x65B0;&#x7684;reject&#x65B9;&#x6848;&#x6216;&#x8005;&#x7ED9;&#x7EBF;&#x7A0B;&#x6C60;&#x52A0;&#x540D;&#x5B57;&#x6216;&#x8005;&#x8981;&#x4F7F;&#x7528;&#x5176;&#x4ED6;queue),&#x5B9E;&#x73B0;<code>ThreadPool</code>&#x63A5;&#x53E3;</li>
+<li>&#x91CD;&#x5199;dispatcher&#x65B9;&#x6848;,&#x5B9E;&#x73B0;<code>Dispatcher</code>&#x63A5;&#x53E3;</li>
+</ul>
+</li>
+</ul>
+<h3 id="&#x76F4;&#x8FDE;&#x63D0;&#x4F9B;"><a href="#&#x76F4;&#x8FDE;&#x63D0;&#x4F9B;" class="headerlink" title="&#x76F4;&#x8FDE;&#x63D0;&#x4F9B;"></a>&#x76F4;&#x8FDE;&#x63D0;&#x4F9B;</h3><ul>
+<li>&#x5728;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;&#x9700;&#x8981;&#x76F4;&#x8FDE;&#x63D0;&#x4F9B; &#x7ED5;&#x8FC7;zookeeper<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Dcom.xiaoke.xxx.XxxService=dubbo://localhost:20890</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>&#x6216;&#x8005;&#x662F;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:reference id=&quot;xxxService&quot; interface=&quot;com.alibaba.xxx.XxxService&quot; url=&quot;dubbo://localhost:20890&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="&#x914D;&#x7F6E;&#x7684;&#x6700;&#x4F73;&#x5B9E;&#x8DF5;"><a href="#&#x914D;&#x7F6E;&#x7684;&#x6700;&#x4F73;&#x5B9E;&#x8DF5;" class="headerlink" title="&#x914D;&#x7F6E;&#x7684;&#x6700;&#x4F73;&#x5B9E;&#x8DF5;"></a>&#x914D;&#x7F6E;&#x7684;&#x6700;&#x4F73;&#x5B9E;&#x8DF5;</h3><ul>
+<li>&#x670D;&#x52A1;&#x7AEF;&#x5C3D;&#x53EF;&#x80FD;&#x914D;&#x7F6E;&#x5BA2;&#x6237;&#x7AEF;&#x914D;&#x7F6E;<ul>
+<li>&#x670D;&#x52A1;&#x7AEF;&#x53EF;&#x914D;&#x7F6E;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x914D;&#x7F6E;&#x6709;&#xFF1A;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3001;&#x91CD;&#x8BD5;&#x6B21;&#x6570;&#x3001;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x7B97;&#x6CD5;&#x3001;&#x5E76;&#x53D1;&#x8FDE;&#x63A5;&#x6570;&#x7B49;</li>
+</ul>
+</li>
+<li>&#x670D;&#x52A1;&#x7AEF;&#x5C3D;&#x53EF;&#x80FD;&#x914D;&#x7F6E;&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x914D;&#x7F6E;<ul>
+<li>&#x9664;&#x53BB;&#x57FA;&#x672C;&#x7684;&#x914D;&#x7F6E;&#x4EE5;&#x5916;&#xFF0C;&#x8FD8;&#x53EF;&#x914D;&#x7F6E;&#x7EBF;&#x7A0B;&#x6C60;&#x5927;&#x5C0F;&#x7B49;</li>
+</ul>
+</li>
+<li>&#x672C;&#x5730;&#x6CE8;&#x518C;&#x4FE1;&#x606F;&#x7F13;&#x5B58;&#x914D;&#x7F6E;<ul>
+<li>&#x53EF;&#x5C06;&#x6CE8;&#x518C;&#x4FE1;&#x606F;&#x7F13;&#x5B58;&#x5230;&#x672C;&#x5730;&#x6587;&#x4EF6;&#xFF0C;&#x8FD9;&#x6837;&#x5F53;zk&#x6302;&#x6389;&#x540E;&#xFF0C;&#x65B0;&#x542F;&#x52A8;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x672C;&#x5730;&#x7684;&#x6CE8;&#x518C;&#x4FE1;&#x606F;&#x627E;&#x5230;&#x76F8;&#x5E94;&#x7684;&#x670D;&#x52A1;&#x7AEF;</li>
+</ul>
+</li>
+</ul>
+<h3 id="Filter&#x63A5;&#x53E3;"><a href="#Filter&#x63A5;&#x53E3;" class="headerlink" title="Filter&#x63A5;&#x53E3;"></a>Filter&#x63A5;&#x53E3;</h3><ul>
+<li>Filter&#x63A5;&#x53E3;&#x63D0;&#x4F9B;invoker&#x88AB;invoke&#x4E4B;&#x524D;&#x6216;&#x8005;&#x4E4B;&#x540E;&#x8981;&#x505A;&#x7684;&#x4E8B;&#x60C5;,&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">invoke&#x4E4B;&#x524D;do sth</span><br><span class="line">invoker.invoke()</span><br><span class="line">invoke&#x4E4B;&#x540E;do sth</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>&#x4E3E;&#x4F8B;&#x8BF4;&#x660E; &#x672C;&#x5730;&#x7F13;&#x5B58;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public class CacheFilter implements Filter {</span><br><span class="line"></span><br><span class="line">    private CacheFactory cacheFactory;</span><br><span class="line"></span><br><span class="line">    public void setCacheFactory(CacheFactory cacheFactory) {</span><br><span class="line">        this.cacheFactory = cacheFactory;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    public Result invoke(Invoker&lt;?&gt; invoker, Invocation invocation) throws RpcException {</span><br><span class="line">        if (cacheFactory != null &amp;&amp; ConfigUtils.isNotEmpty(invoker.getUrl().getMethodParameter(invocation.getMethodName(), Constants.CACHE_KEY))) {</span><br><span class="line">            Cache cache = cacheFactory.getCache(invoker.getUrl().addParameter(Constants.METHOD_KEY, invocation.getMethodName()));</span><br><span class="line">            if (cache != null) {</span><br><span class="line">                String key = StringUtils.toArgumentString(invocation.getArguments());</span><br><span class="line">                if (cache != null &amp;&amp; key != null) {</span><br><span class="line">                    Object value = cache.get(key);</span><br><span class="line">                    if (value != null) {</span><br><span class="line">                        return new RpcResult(value);</span><br><span class="line">                    }</span><br><span class="line">                    Result result = invoker.invoke(invocation);</span><br><span class="line">                    if (! result.hasException()) {</span><br><span class="line">                        cache.put(key, result.getValue());</span><br><span class="line">                    }</span><br><span class="line">                    return result;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        return invoker.invoke(invocation);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>&#x5728;&#x771F;&#x6B63;refer&#x65F6;&#x4F1A;&#x6784;&#x9020;Filter&#x94FE;&#xFF0C;&#x8C03;&#x7528;&#x76F8;&#x5E94;&#x670D;&#x52A1;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">private static &lt;T&gt; Invoker&lt;T&gt; buildInvokerChain(final Invoker&lt;T&gt; invoker, String key, String group) {</span><br><span class="line">       Invoker&lt;T&gt; last = invoker;</span><br><span class="line">       List&lt;Filter&gt; filters = ExtensionLoader.getExtensionLoader(Filter.class).getActivateExtension(invoker.getUrl(), key, group);</span><br><span class="line">       if (filters.size() &gt; 0) {</span><br><span class="line">           for (int i = filters.size() - 1; i &gt;= 0; i --) {</span><br><span class="line">               final Filter filter = filters.get(i);</span><br><span class="line">               final Invoker&lt;T&gt; next = last;</span><br><span class="line">               last = new Invoker&lt;T&gt;() {</span><br><span class="line"></span><br><span class="line">                   public Class&lt;T&gt; getInterface() {</span><br><span class="line">                       return invoker.getInterface();</span><br><span class="line">                   }</span><br><span class="line"></span><br><span class="line">                   public URL getUrl() {</span><br><span class="line">                       return invoker.getUrl();</span><br><span class="line">                   }</span><br><span class="line"></span><br><span class="line">                   public boolean isAvailable() {</span><br><span class="line">                       return invoker.isAvailable();</span><br><span class="line">                   }</span><br><span class="line"></span><br><span class="line">                   public Result invoke(Invocation invocation) throws RpcException {</span><br><span class="line">                       return filter.invoke(next, invocation);</span><br><span class="line">                   }</span><br><span class="line"></span><br><span class="line">                   public void destroy() {</span><br><span class="line">                       invoker.destroy();</span><br><span class="line">                   }</span><br><span class="line"></span><br><span class="line">                   @Override</span><br><span class="line">                   public String toString() {</span><br><span class="line">                       return invoker.toString();</span><br><span class="line">                   }</span><br><span class="line">               };</span><br><span class="line">           }</span><br><span class="line">       }</span><br><span class="line">       return last;</span><br><span class="line">   }</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="&#x7ED3;&#x679C;&#x7F13;&#x5B58;"><a href="#&#x7ED3;&#x679C;&#x7F13;&#x5B58;" class="headerlink" title="&#x7ED3;&#x679C;&#x7F13;&#x5B58;"></a>&#x7ED3;&#x679C;&#x7F13;&#x5B58;</h3><ul>
+<li>cacheFilter&#x5B9E;&#x73B0;Filter&#x7528;&#x6765;&#x7F13;&#x5B58;&#x70ED;&#x70B9;&#x6570;&#x636E;&#xFF0C;&#x5C06;&#x6570;&#x636E;&#x5B58;&#x5728;&#x7F13;&#x5B58;&#x4E2D;&#xFF0C;&#x5728;&#x8C03;&#x7528;&#x8FDC;&#x7A0B;&#x670D;&#x52A1;&#x4E4B;&#x524D;&#x5148;&#x5230;&#x7F13;&#x5B58;&#x4E2D;&#x53D6;&#x6570;&#x636E;</li>
+<li><p>&#x914D;&#x7F6E;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:reference interface=&quot;com.xiaoke.dubbo.CacheDemoService&quot; id=&quot;cacheDemoService&quot; cache=&quot;lru&quot;/&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>&#x9ED8;&#x8BA4;&#x7F13;&#x5B58;<code>size=1000</code>&#xFF0C;&#x5F53;&#x5927;&#x4E8E;<code>size</code>&#x65F6;&#x629B;&#x5F03;&#x6389;&#x6700;&#x5F00;&#x59CB;&#x7684;&#x7F13;&#x5B58;&#x3002;</p>
+</li>
+<li>&#x5BF9;&#x4E8E;&#x670D;&#x52A1;&#x7AEF;&#x4E3A;&#x5E42;&#x7B49;&#x6027;&#x7684;&#x53EF;&#x4EE5;&#x91C7;&#x7528;&#x7ED3;&#x679C;&#x7F13;&#x5B58;</li>
+<li>&#x7F13;&#x5B58;&#x5B9A;&#x5236;  &#x6269;&#x5C55;<code>AbstractCacheFactory</code>&#xFF0C;&#x6BD4;&#x5982;&#x5C06;Guava cache&#x4E0E;dubbo&#x7ED3;&#x5408;&#x8BBE;&#x7F6E;&#x7F13;&#x5B58;&#x8D85;&#x65F6;&#x65F6;&#x95F4;</li>
+</ul>
+<h3 id="dubbo&#x670D;&#x52A1;&#x964D;&#x7EA7;"><a href="#dubbo&#x670D;&#x52A1;&#x964D;&#x7EA7;" class="headerlink" title="dubbo&#x670D;&#x52A1;&#x964D;&#x7EA7;"></a>dubbo&#x670D;&#x52A1;&#x964D;&#x7EA7;</h3><ul>
+<li>&#x670D;&#x52A1;&#x7AEF;&#x670D;&#x52A1;&#x964D;&#x7EA7;  &#x672C;&#x5730;mock<ul>
+<li>&#x5F53;&#x51FA;&#x73B0;RPCException&#x65F6;&#x624D;&#x4F1A;&#x6267;&#x884C;mock&#xFF0C;&#x56E0;&#x6B64;&#x5728;&#x5904;&#x7406;RPCException&#x65F6;&#x53EF;&#x4EE5;&#x8003;&#x8651;&#x4F7F;&#x7528;mock&#xFF0C;&#x6BD4;&#x5982;&#x7F51;&#x7EDC;&#x9519;&#x8BEF;&#x3001;&#x8FDE;&#x63A5;&#x8D85;&#x65F6;&#x7B49;<br>*&#x914D;&#x7F6E; &#x5728;api&#x5305;&#x4E2D;&#x521B;&#x5EFA;<api name="">Mock.java&#x6587;&#x4EF6;&#xFF0C;&#x5E76;&#x5B9E;&#x73B0;&#x63A5;&#x53E3;&#xFF0C;&#x670D;&#x52A1;&#x7AEF;&#x914D;&#x7F6E;&#x5982;&#x4E0B;&#xFF1A;</api></li>
+</ul>
+</li>
+</ul>
+<pre><code>`
+    &lt;dubbo:service interface=&quot;com.xiaoke.dubbo.DemoService&quot; ref=&quot;demoService&quot; loadbalance=&quot;random&quot; timeout=&quot;1000&quot; retries=&quot;0&quot; mock=&quot;true&quot;/&gt;
+`
+</code></pre><ul>
+<li>&#x670D;&#x52A1;&#x964D;&#x7EA7;&#x4F18;&#x5316;  &#x501F;&#x52A9;Filter&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x670D;&#x52A1;&#x964D;&#x7EA7;&#x901A;&#x8FC7;&#x68C0;&#x67E5;&#x670D;&#x52A1;&#x5F02;&#x5E38;&#x7684;&#x6B21;&#x6570;&#x6216;&#x8005;&#x4F7F;&#x7528;&#x5F00;&#x5173;&#x6765;&#x5224;&#x65AD;&#x662F;&#x5426;&#x8FDB;&#x5165;&#x670D;&#x52A1;&#x964D;&#x7EA7;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x81EA;&#x5B9A;&#x4E49;&#x964D;&#x7EA7;&#x65B9;&#x6848;&#xFF0C;&#x5E76;&#x4E14;&#x4F1A;&#x5C1D;&#x8BD5;&#x6B63;&#x5E38;&#x8C03;&#x7528;&#x3002;</li>
+</ul>
+<h3 id="dubbo&#x63D2;&#x4EF6;&#x5316;&#x5B9E;&#x73B0;-ExtentionLoader"><a href="#dubbo&#x63D2;&#x4EF6;&#x5316;&#x5B9E;&#x73B0;-ExtentionLoader" class="headerlink" title="dubbo&#x63D2;&#x4EF6;&#x5316;&#x5B9E;&#x73B0; ExtentionLoader"></a>dubbo&#x63D2;&#x4EF6;&#x5316;&#x5B9E;&#x73B0; ExtentionLoader</h3><blockquote>
+<p>dubbo&#x4E2D;&#x52A0;&#x8F7D;&#x63D2;&#x4EF6;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x901A;&#x8FC7;SPI&#x534F;&#x8BAE;&#x6765;&#x5B9E;&#x73B0;&#xFF0C;dubbo&#x6846;&#x67B6;&#x5DF2;&#x7ECF;&#x5B9A;&#x4E49;&#x597D;&#x534F;&#x8BAE;&#x7684;&#x5B9E;&#x73B0;&#x6846;&#x67B6;&#x548C;&#x89C4;&#x8303;&#xFF0C;&#x7B2C;&#x4E09;&#x65B9;&#x53EA;&#x8981;&#x6309;&#x7167;&#x89C4;&#x8303;&#x5B9A;&#x4E49;&#x81EA;&#x5DF1;&#x7684;&#x63D2;&#x4EF6;&#xFF0C;dubbo&#x6846;&#x67B6;&#x5C31;&#x53EF;&#x4EE5;&#x52A0;&#x8F7D;&#x8BE5;&#x63D2;&#x4EF6;&#x3002;</p>
+</blockquote>
+<ul>
+<li>&#x5177;&#x4F53;&#x5B9A;&#x4E49;&#x662F;&#x8981;&#x5728;META-INF/dubbo&#x3001;META-INF/dubbo/internal&#x6216;&#x8005;META-INF/services&#x4E0B;&#x9762;&#x4EE5;&#x9700;&#x8981;&#x5B9E;&#x73B0;&#x7684;&#x63A5;&#x53E3;&#x5168;&#x9762;&#x53BB;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x540D;&#x4E3A;&#xFF1A;<code>&lt;&#x63A5;&#x53E3;&#x5168;&#x9650;&#x5B9A;&#x540D;&gt;</code>&#xFF0C;&#x5185;&#x5BB9;&#xFF1A;<code>&#x914D;&#x7F6E;&#x540D;=&#x6269;&#x5C55;&#x5B9E;&#x73B0;&#x7C7B;&#x5168;&#x9650;&#x5B9A;&#x540D;</code>&#x5047;&#x8BBE;Filter&#x63A5;&#x53E3;&#x7684;&#x4E00;&#x4E2A;&#x5B9E;&#x73B0;&#x7C7B;TimeoutFilter&#xFF0C;&#x5219;&#x6587;&#x5939;&#x540D;&#x79F0;&#x4E3A;<code>com.alibaba.dubbo.rpc.Filter</code>&#xFF0C;&#x5185;&#x5BB9;&#x4E3A;&#xFF1A;<code>timeout</code></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/01/git 命令/" rel="next" title="git命令">
+                <i class="fa fa-chevron-left"></i> git命令
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/23/RPC原理简析/" rel="prev" title="RPC原理简析">
+                RPC原理简析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/01/01/dubbo原理和实践整理(1)/"
+           data-title="dubbo原理和实践整理（1）" data-url="xiaoke.tech/2016/01/01/dubbo原理和实践整理(1)/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="xiaoke" />
+          <p class="site-author-name" itemprop="name">xiaoke</p>
+          <p class="site-description motion-element" itemprop="description">学习总结&生活感悟</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#dubbo超时处理"><span class="nav-number">1.</span> <span class="nav-text">dubbo超时处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dubbo的启动时检查"><span class="nav-number">2.</span> <span class="nav-text">dubbo的启动时检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dubbo线程模型配置"><span class="nav-number">3.</span> <span class="nav-text">dubbo线程模型配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直连提供"><span class="nav-number">4.</span> <span class="nav-text">直连提供</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置的最佳实践"><span class="nav-number">5.</span> <span class="nav-text">配置的最佳实践</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Filter接口"><span class="nav-number">6.</span> <span class="nav-text">Filter接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果缓存"><span class="nav-number">7.</span> <span class="nav-text">结果缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dubbo服务降级"><span class="nav-number">8.</span> <span class="nav-text">dubbo服务降级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dubbo插件化实现-ExtentionLoader"><span class="nav-number">9.</span> <span class="nav-text">dubbo插件化实现 ExtentionLoader</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiaoke</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xiaoketech"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
