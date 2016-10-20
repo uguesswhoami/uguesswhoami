@@ -1,0 +1,684 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="&amp;#x5199;&amp;#x51FA;&amp;#x4F18;&amp;#x96C5;&amp;#x7684;&amp;#x4EE3;&amp;#x7801;&amp;#x4E00;&amp;#x76F4;&amp;#x662F;&amp;#x7A0B;&amp;#x5E8F;&amp;#x5458;&amp;#x7684;&amp;#x8FFD;&amp;#x6C42;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个原则，两个模式">
+<meta property="og:url" content="xiaoke.tech/2016/01/01/一个原则，两个模式/index.html">
+<meta property="og:site_name" content="xiaoke's blog">
+<meta property="og:description" content="&amp;#x5199;&amp;#x51FA;&amp;#x4F18;&amp;#x96C5;&amp;#x7684;&amp;#x4EE3;&amp;#x7801;&amp;#x4E00;&amp;#x76F4;&amp;#x662F;&amp;#x7A0B;&amp;#x5E8F;&amp;#x5458;&amp;#x7684;&amp;#x8FFD;&amp;#x6C42;">
+<meta property="og:image" content="https://raw.githubusercontent.com/uguesswhoami/pictures/master/strategy1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/uguesswhoami/pictures/master/strategy2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/uguesswhoami/pictures/master/template1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/uguesswhoami/pictures/master/template2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/uguesswhoami/pictures/master/template3.png">
+<meta property="og:updated_time" content="2016-10-20T03:33:52.345Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一个原则，两个模式">
+<meta name="twitter:description" content="&amp;#x5199;&amp;#x51FA;&amp;#x4F18;&amp;#x96C5;&amp;#x7684;&amp;#x4EE3;&amp;#x7801;&amp;#x4E00;&amp;#x76F4;&amp;#x662F;&amp;#x7A0B;&amp;#x5E8F;&amp;#x5458;&amp;#x7684;&amp;#x8FFD;&amp;#x6C42;">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/uguesswhoami/pictures/master/strategy1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 一个原则，两个模式 | xiaoke's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xiaoke's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                一个原则，两个模式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-01-01T00:00:00+08:00" content="2016-01-01">
+              2016-01-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/01/一个原则，两个模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/01/一个原则，两个模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>&#x5199;&#x51FA;&#x4F18;&#x96C5;&#x7684;&#x4EE3;&#x7801;&#x4E00;&#x76F4;&#x662F;&#x7A0B;&#x5E8F;&#x5458;&#x7684;&#x8FFD;&#x6C42;</p>
+</blockquote>
+ <a id="more"></a>
+<h1 id="&#x4E00;&#x3001;&#x80CC;&#x666F;"><a href="#&#x4E00;&#x3001;&#x80CC;&#x666F;" class="headerlink" title="&#x4E00;&#x3001;&#x80CC;&#x666F;"></a>&#x4E00;&#x3001;&#x80CC;&#x666F;</h1><blockquote>
+<p>&#x9762;&#x5BF9;&#x9700;&#x6C42;&#x7684;&#x5343;&#x5343;&#x5343;&#x5343;&#x5343;&#x5343;&#x5343;&#x53D8;&#x4E07;&#x4E07;&#x4E07;&#x4E07;&#x4E07;&#x4E07;&#x4E07;&#x4E07;&#x5316;&#xFF0C;&#x7A0B;&#x5E8F;&#x5458;&#x603B;&#x8981;&#xFF08;&#x60F3;&#x8981;&#xFF09;&#x505A;&#x70B9;&#x4EC0;&#x4E48;&#x3002;</p>
+<h1 id="&#x4E8C;&#x3001;&#x4E00;&#x4E2A;&#x539F;&#x5219;-&#x2014;-&#x5F00;&#x653E;-&#x95ED;&#x5408;&#x539F;&#x5219;"><a href="#&#x4E8C;&#x3001;&#x4E00;&#x4E2A;&#x539F;&#x5219;-&#x2014;-&#x5F00;&#x653E;-&#x95ED;&#x5408;&#x539F;&#x5219;" class="headerlink" title="&#x4E8C;&#x3001;&#x4E00;&#x4E2A;&#x539F;&#x5219; &#x2014; &#x5F00;&#x653E;-&#x95ED;&#x5408;&#x539F;&#x5219;"></a>&#x4E8C;&#x3001;&#x4E00;&#x4E2A;&#x539F;&#x5219; &#x2014; &#x5F00;&#x653E;-&#x95ED;&#x5408;&#x539F;&#x5219;</h1><p>&#x4E00;&#x8A00;&#x4EE5;&#x853D;&#x4E4B;&#xFF1A; &#x5BF9;&#x6269;&#x5C55;&#x5F00;&#x653E;&#xFF0C;&#x5BF9;&#x4FEE;&#x6539;&#x5173;&#x95ED;&#x3002;</p>
+</blockquote>
+<h1 id="&#x4E09;&#x3001;&#x4E24;&#x4E2A;&#x6A21;&#x5F0F;"><a href="#&#x4E09;&#x3001;&#x4E24;&#x4E2A;&#x6A21;&#x5F0F;" class="headerlink" title="&#x4E09;&#x3001;&#x4E24;&#x4E2A;&#x6A21;&#x5F0F;"></a>&#x4E09;&#x3001;&#x4E24;&#x4E2A;&#x6A21;&#x5F0F;</h1><h2 id="1&#x3001;&#x7B56;&#x7565;&#x6A21;&#x5F0F;"><a href="#1&#x3001;&#x7B56;&#x7565;&#x6A21;&#x5F0F;" class="headerlink" title="1&#x3001;&#x7B56;&#x7565;&#x6A21;&#x5F0F;"></a>1&#x3001;&#x7B56;&#x7565;&#x6A21;&#x5F0F;</h2><blockquote>
+<p>&#x5B9A;&#x4E49;&#x4E00;&#x7CFB;&#x5217;&#x7684;&#x884C;&#x4E3A;,&#x628A;&#x5B83;&#x4EEC;&#x4E00;&#x4E2A;&#x4E2A;&#x5C01;&#x88C5;&#x8D77;&#x6765;, &#x5E76;&#x4E14;&#x4F7F;&#x5B83;&#x4EEC;&#x53EF;&#x76F8;&#x4E92;&#x66FF;&#x6362;&#x3002;&#x7531;&#x7528;&#x6237;&#x6765;&#x51B3;&#x5B9A;&#x4F7F;&#x7528;&#x54EA;&#x79CD;&#x884C;&#x4E3A;&#x3002;</p>
+</blockquote>
+<h3 id="&#x9700;&#x6C42;"><a href="#&#x9700;&#x6C42;" class="headerlink" title="&#x9700;&#x6C42;"></a>&#x9700;&#x6C42;</h3><ul>
+<li>&#x9488;&#x5BF9;&#x4EA7;&#x54C1;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x4FC3;&#x9500;&#x65B9;&#x5F0F;&#xFF0C;&#x5BF9;&#x5E94;&#x4E8E;&#x4E0D;&#x540C;&#x7684;&#x4FC3;&#x9500;&#x7B97;&#x6CD5;&#x3002;</li>
+</ul>
+<h3 id="&#x4E24;&#x79CD;&#x5B9E;&#x73B0;&#x53CA;&#x4F18;&#x52A3;"><a href="#&#x4E24;&#x79CD;&#x5B9E;&#x73B0;&#x53CA;&#x4F18;&#x52A3;" class="headerlink" title="&#x4E24;&#x79CD;&#x5B9E;&#x73B0;&#x53CA;&#x4F18;&#x52A3;"></a>&#x4E24;&#x79CD;&#x5B9E;&#x73B0;&#x53CA;&#x4F18;&#x52A3;</h3><ul>
+<li>&#x7B2C;&#x4E00;&#x79CD;&#x5B9E;&#x73B0;</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/uguesswhoami/pictures/master/strategy1.png" alt="strategy1"></p>
+<p>&#x8FD9;&#x79CD;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x7B80;&#x5355;&#xFF0C;&#x9488;&#x5BF9;&#x4E0D;&#x540C;&#x7684;&#x4FC3;&#x9500;&#x9700;&#x6C42;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x7C7B;&#x4E2D;&#x5199;&#x4E0D;&#x540C;&#x7684;&#x884C;&#x4E3A;&#xFF0C;&#x8FD9;&#x6837;&#x5F53;&#x9700;&#x6C42;&#x8981;&#x52A0;&#x4E00;&#x6761;&#x4FC3;&#x9500;&#x65B9;&#x5F0F;&#x65F6;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x5728;&#x539F;&#x6765;&#x57FA;&#x7840;&#x4E4B;&#x4E0A;&#x518D;&#x52A0;&#x884C;&#x4E3A;&#xFF0C;&#x5E76;&#x4E14;&#x5916;&#x90E8;&#x8C03;&#x7528;&#x65B9;&#x4E5F;&#x9700;&#x8981;&#x505A;&#x76F8;&#x5E94;&#x4FEE;&#x6539;&#x3002;&#x4E0D;&#x6EE1;&#x8DB3;&#x5F00;&#x653E;-&#x95ED;&#x5408;&#x539F;&#x5219;&#x3002;</p>
+<ul>
+<li>&#x7B2C;&#x4E8C;&#x79CD;&#x5B9E;&#x73B0;</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/uguesswhoami/pictures/master/strategy2.png" alt="strategy1"></p>
+<p>&#x8FD9;&#x79CD;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x5C06;&#x539F;&#x6765;&#x7684;&#x4E0D;&#x540C;&#x884C;&#x4E3A;&#x62BD;&#x8C61;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#x4E2D;&#xFF0C;&#x5F53;&#x9700;&#x8981;&#x52A0;&#x4E00;&#x6761;&#x65B0;&#x7684;&#x4FC3;&#x9500;&#x65B9;&#x5F0F;&#x65F6;&#xFF0C;&#x76F4;&#x63A5;&#x6269;&#x5C55;&#xFF0C;&#x540C;&#x65F6;&#x672A;&#x6765;&#x5982;&#x679C;&#x5728;&#x5404;&#x4E2A;&#x5B9E;&#x73B0;&#x7C7B;&#x4E2D;&#x6709;&#x76F8;&#x540C;&#x7684;&#x884C;&#x4E3A;&#xFF0C;&#x53EF;&#x7075;&#x6D3B;&#x62BD;&#x8C61;&#x51FA;&#x6765;&#xFF1B;&#x53E6;&#x5916;&#x5BF9;&#x5916;&#x63D0;&#x4F9B;&#x7EDF;&#x4E00;&#x63A5;&#x53E3;&#xFF0C;&#x8C03;&#x7528;&#x65B9;&#x53EF;&#x7075;&#x6D3B;&#x9009;&#x62E9;&#x88AB;&#x8C03;&#x7528;&#x884C;&#x4E3A;&#x3002;</p>
+<h2 id="2&#x3001;&#x6A21;&#x677F;&#x6A21;&#x5F0F;"><a href="#2&#x3001;&#x6A21;&#x677F;&#x6A21;&#x5F0F;" class="headerlink" title="2&#x3001;&#x6A21;&#x677F;&#x6A21;&#x5F0F;"></a>2&#x3001;&#x6A21;&#x677F;&#x6A21;&#x5F0F;</h2><blockquote>
+<p>&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x64CD;&#x4F5C;&#x4E2D;&#x7684;&#x884C;&#x4E3A;&#x7684;&#x9AA8;&#x67B6;&#xFF0C;&#x800C;&#x5C06;&#x4E00;&#x4E9B;&#x884C;&#x4E3A;&#x6B65;&#x9AA4;&#x5EF6;&#x8FDF;&#x5230;&#x5B50;&#x7C7B;&#x4E2D;&#x3002;</p>
+<h3 id="&#x9700;&#x6C42;-1"><a href="#&#x9700;&#x6C42;-1" class="headerlink" title="&#x9700;&#x6C42;"></a>&#x9700;&#x6C42;</h3><ul>
+<li>&#x529F;&#x80FD;&#x9700;&#x6C42;&#x6EE1;&#x8DB3;&#x56FA;&#x5B9A;&#x7684;&#x6D41;&#x7A0B;&#xFF1A;beforeDoSth()&#x3001;doingSth()&#x548C;afterDoSth(),&#x5176;&#x4E2D;beforeDoSth()&#x548C;afterDoSth()&#x662F;&#x4E0D;&#x53D8;&#x7684;&#xFF0C;&#x53EA;&#x6709;doSth()&#x662F;&#x6839;&#x636E;&#x573A;&#x666F;&#x53D8;&#x5316;&#x7684;&#x3002;</li>
+</ul>
+</blockquote>
+<h3 id="&#x4E09;&#x79CD;&#x5B9E;&#x73B0;&#x53CA;&#x4F18;&#x52A3;"><a href="#&#x4E09;&#x79CD;&#x5B9E;&#x73B0;&#x53CA;&#x4F18;&#x52A3;" class="headerlink" title="&#x4E09;&#x79CD;&#x5B9E;&#x73B0;&#x53CA;&#x4F18;&#x52A3;"></a>&#x4E09;&#x79CD;&#x5B9E;&#x73B0;&#x53CA;&#x4F18;&#x52A3;</h3><ul>
+<li>&#x7B2C;&#x4E00;&#x79CD;&#x5B9E;&#x73B0;&#xFF1A;</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/uguesswhoami/pictures/master/template1.png" alt="template1"></p>
+<pre><code>&#x5224;&#x65AD;&#x4E0D;&#x540C;&#x7684;&#x573A;&#x666F;&#x8C03;&#x7528;&#x4E0D;&#x540C;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5176;&#x4E2D;&#x5B9E;&#x73B0;&#x7C7B;&#x4E2D;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class DoImpl implements DoInterface {</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void doSth(&#x573A;&#x666F;&#x53C2;&#x6570;) {</span><br><span class="line">        beforeDoSth();</span><br><span class="line">        if(&#x573A;&#x666F;1){</span><br><span class="line">            doingSth1();</span><br><span class="line">        }else if (&#x573A;&#x666F;2){</span><br><span class="line">            doingSth2();</span><br><span class="line">        }else if (&#x573A;&#x666F;3){</span><br><span class="line">            doingSth3();</span><br><span class="line">        }</span><br><span class="line">        afterDoSth();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x79CD;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x7B80;&#x5355;&#x7C97;&#x66B4;&#xFF0C;&#x76F4;&#x63A5;&#x5224;&#x65AD;&#x573A;&#x666F;&#x6765;&#x5B9E;&#x73B0;&#x76F8;&#x5E94;&#x529F;&#x80FD;&#x9700;&#x6C42;&#xFF0C;&#x4F46;&#x662F;&#x5F53;&#x6709;&#x65B0;&#x7684;&#x573A;&#x666F;&#x9700;&#x6C42;&#x65F6;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x518D;&#x52A0;<code>elseif</code>&#xFF0C;&#x5728;&#x76EE;&#x524D;&#x4E3E;&#x4F8B;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x5C1A;&#x80FD;&#x4FDD;&#x8BC1;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x6216;&#x6539;&#x52A8;&#x5176;&#x4ED6;&#x573A;&#x666F;&#x529F;&#x80FD;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x5B9E;&#x9645;&#x9879;&#x76EE;&#x4E2D;&#x5F88;&#x5BB9;&#x6613;&#x53D8;&#x52A8;&#x539F;&#x6765;&#x7684;&#x529F;&#x80FD;&#x6216;&#x8005;&#x662F;&#x9020;&#x6210;&#x51B2;&#x7A81;&#xFF0C;&#x987E;&#x6B64;&#x5931;&#x5F7C;&#x3002;</p>
+<ul>
+<li>&#x7B2C;&#x4E8C;&#x79CD;&#x5B9E;&#x73B0;&#xFF1A;</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/uguesswhoami/pictures/master/template2.png" alt="template2"></p>
+<p>&#x521B;&#x5EFA;&#x4E0D;&#x540C;&#x7684;&#x7C7B;&#x5BF9;&#x5E94;&#x4E8E;&#x4E0D;&#x540C;&#x7684;&#x573A;&#x666F;&#xFF0C;&#x8FD9;&#x6837;&#x5916;&#x90E8;&#x6839;&#x636E;&#x573A;&#x666F;&#x521B;&#x5EFA;&#x4E0D;&#x540C;&#x7684;&#x7C7B;&#x5B9E;&#x4F8B;&#xFF0C;&#x8FDB;&#x800C;&#x8C03;&#x7528;&#x4E0D;&#x540C;&#x7684;doSth()&#x65B9;&#x6CD5;&#x5B9E;&#x73B0;&#x3002;&#x8FD9;&#x6837;&#x5F53;&#x6709;&#x65B0;&#x7684;&#x573A;&#x666F;&#x9700;&#x6C42;&#x65F6;&#x76F4;&#x63A5;&#x518D;&#x52A0;&#x4E00;&#x4E2A;&#x5B9E;&#x73B0;&#x7C7B;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;&#x57FA;&#x672C;&#x4F53;&#x73B0;&#x4E86;&#x5F00;&#x653E;-&#x95ED;&#x5408;&#x539F;&#x5219;&#xFF0C;&#x4F46;&#x662F;&#x5F88;&#x660E;&#x663E;&#x5197;&#x4F59;&#x4EE3;&#x7801;&#x591A;&#x3002;</p>
+<ul>
+<li>&#x7B2C;&#x4E09;&#x79CD;&#x5B9E;&#x73B0;&#xFF1A;</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/uguesswhoami/pictures/master/template3.png" alt="template3"></p>
+<p>&#x529F;&#x80FD;&#x9700;&#x6C42;&#x4E2D;&#x53EF;&#x4EE5;&#x660E;&#x663E;&#x770B;&#x5230;beforeDoSth()&#x548C;afterDoSth()&#x662F;&#x56FA;&#x5B9A;&#x4E0D;&#x53D8;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x5C06;&#x5176;&#x62BD;&#x8C61;&#x51FA;&#x6765;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#x7EE7;&#x627F;&#x8BE5;&#x62BD;&#x8C61;&#x5E76;&#x4E14;&#x53EA;&#x8981;&#x5B9E;&#x73B0;doingSth()&#x5373;&#x53EF;&#x3002;&#x8FD9;&#x6837;&#x65E2;&#x7B26;&#x5408;&#x4E86;&#x5BF9;&#x4FEE;&#x6539;&#x5173;&#x95ED;&#x3001;&#x5BF9;&#x6269;&#x5C55;&#x5F00;&#x653E;&#x7684;&#x539F;&#x5219;&#xFF0C;&#x540C;&#x65F6;&#x53C8;&#x4FDD;&#x8BC1;&#x6CA1;&#x6709;&#x5197;&#x4F59;&#x4EE3;&#x7801;&#x3002;</p>
+<h1 id="&#x601D;&#x8003;"><a href="#&#x601D;&#x8003;" class="headerlink" title="&#x601D;&#x8003;"></a>&#x601D;&#x8003;</h1><ul>
+<li>&#x8D8A;&#x5F80;&#x4E0B;&#x5199;&#x8D8A;&#x89C9;&#x5F97;&#x5404;&#x79CD;&#x6A21;&#x5F0F;&#x5927;&#x540C;&#x5C0F;&#x5F02;&#x3002;</li>
+<li>&#x62BD;&#x8C61;&#x4E0D;&#x53D8;&#x90E8;&#x5206;&#xFF0C;&#x9884;&#x89C1;&#x672A;&#x6765;&#x53EF;&#x53D8;&#x90E8;&#x5206;&#xFF08;&#x8FD9;&#x4E2A;&#x4E2A;&#x4EBA;&#x8BA4;&#x4E3A;&#x6BD4;&#x8F83;&#x96BE;&#xFF09;&#xFF0C;&#x5E76;&#x6309;&#x7167;&#x5F00;&#x653E;-&#x95ED;&#x5408;&#x539F;&#x5219;&#x6765;code&#x3002;</li>
+<li>&#x65E0;&#x9700;&#x751F;&#x642C;&#x786C;&#x5957;&#xFF0C;&#x4E00;&#x4E9B;&#x6A21;&#x5F0F;&#x5176;&#x5B9E;&#x90FD;&#x5728;&#x65E0;&#x610F;&#x4E4B;&#x95F4;&#x5C31;&#x7528;&#x4E0A;&#x4E86;</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/01/git 命令/" rel="next" title="git命令">
+                <i class="fa fa-chevron-left"></i> git命令
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/01/dubbo原理和实践整理(1)/" rel="prev" title="dubbo原理和实践整理（1）">
+                dubbo原理和实践整理（1） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/01/01/一个原则，两个模式/"
+           data-title="一个原则，两个模式" data-url="xiaoke.tech/2016/01/01/一个原则，两个模式/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="xiaoke" />
+          <p class="site-author-name" itemprop="name">xiaoke</p>
+          <p class="site-description motion-element" itemprop="description">学习总结&生活感悟</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、背景"><span class="nav-number">1.</span> <span class="nav-text">一、背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、一个原则-—-开放-闭合原则"><span class="nav-number">2.</span> <span class="nav-text">二、一个原则 — 开放-闭合原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、两个模式"><span class="nav-number">3.</span> <span class="nav-text">三、两个模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、策略模式"><span class="nav-number">3.1.</span> <span class="nav-text">1、策略模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#需求"><span class="nav-number">3.1.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两种实现及优劣"><span class="nav-number">3.1.2.</span> <span class="nav-text">两种实现及优劣</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、模板模式"><span class="nav-number">3.2.</span> <span class="nav-text">2、模板模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#需求-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三种实现及优劣"><span class="nav-number">3.2.2.</span> <span class="nav-text">三种实现及优劣</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思考"><span class="nav-number">4.</span> <span class="nav-text">思考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiaoke</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xiaoketech"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
