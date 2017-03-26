@@ -84,16 +84,18 @@
 
 
 
-<meta name="description" content="git&amp;#x662F;&amp;#x975E;&amp;#x5E38;&amp;#x597D;&amp;#x7528;&amp;#x7684;&amp;#x4EE3;&amp;#x7801;&amp;#x6258;&amp;#x7BA1;&amp;#x5DE5;&amp;#x5177;,github&amp;#x4E5F;&amp;#x662F;&amp;#x4E16;&amp;#x754C;&amp;#x4E0A;&amp;#x6700;&amp;#x4F1F;&amp;#x5927;&amp;#x7684;&amp;#x5F00;&amp;#x6E90;&amp;#x79">
+<meta name="description" content="&amp;#x5206;&amp;#x5E03;&amp;#x5F0F;&amp;#x4E8B;&amp;#x52A1;&amp;#x53EF;&amp;#x4EE5;&amp;#x7528;&amp;#x53EF;&amp;#x9760;&amp;#x6D88;&amp;#x606F;&amp;#x4E8B;&amp;#x4EF6;&amp;#x8FBE;&amp;#x5230;&amp;#x6700;&amp;#x7EC8;&amp;#x4E00;&amp;#x81F4;&amp;#x6027;&amp;#x7684;&amp;#x65B9;&amp;#x5F0F;&amp;#x89E3">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git命令">
-<meta property="og:url" content="xiaoke.tech/2015/04/01/git 命令/index.html">
+<meta property="og:title" content="使用最终一致性解决分布式事务问题">
+<meta property="og:url" content="xiaoke.tech/2016/05/06/最终一致性(1)/index.html">
 <meta property="og:site_name" content="xiaoke's blog">
-<meta property="og:description" content="git&amp;#x662F;&amp;#x975E;&amp;#x5E38;&amp;#x597D;&amp;#x7528;&amp;#x7684;&amp;#x4EE3;&amp;#x7801;&amp;#x6258;&amp;#x7BA1;&amp;#x5DE5;&amp;#x5177;,github&amp;#x4E5F;&amp;#x662F;&amp;#x4E16;&amp;#x754C;&amp;#x4E0A;&amp;#x6700;&amp;#x4F1F;&amp;#x5927;&amp;#x7684;&amp;#x5F00;&amp;#x6E90;&amp;#x79">
-<meta property="og:updated_time" content="2016-07-08T06:03:06.472Z">
+<meta property="og:description" content="&amp;#x5206;&amp;#x5E03;&amp;#x5F0F;&amp;#x4E8B;&amp;#x52A1;&amp;#x53EF;&amp;#x4EE5;&amp;#x7528;&amp;#x53EF;&amp;#x9760;&amp;#x6D88;&amp;#x606F;&amp;#x4E8B;&amp;#x4EF6;&amp;#x8FBE;&amp;#x5230;&amp;#x6700;&amp;#x7EC8;&amp;#x4E00;&amp;#x81F4;&amp;#x6027;&amp;#x7684;&amp;#x65B9;&amp;#x5F0F;&amp;#x89E3">
+<meta property="og:image" content="https://raw.githubusercontent.com/uguesswhoami/pictures/master/%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7.png">
+<meta property="og:updated_time" content="2017-03-26T10:17:26.521Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="git命令">
-<meta name="twitter:description" content="git&amp;#x662F;&amp;#x975E;&amp;#x5E38;&amp;#x597D;&amp;#x7528;&amp;#x7684;&amp;#x4EE3;&amp;#x7801;&amp;#x6258;&amp;#x7BA1;&amp;#x5DE5;&amp;#x5177;,github&amp;#x4E5F;&amp;#x662F;&amp;#x4E16;&amp;#x754C;&amp;#x4E0A;&amp;#x6700;&amp;#x4F1F;&amp;#x5927;&amp;#x7684;&amp;#x5F00;&amp;#x6E90;&amp;#x79">
+<meta name="twitter:title" content="使用最终一致性解决分布式事务问题">
+<meta name="twitter:description" content="&amp;#x5206;&amp;#x5E03;&amp;#x5F0F;&amp;#x4E8B;&amp;#x52A1;&amp;#x53EF;&amp;#x4EE5;&amp;#x7528;&amp;#x53EF;&amp;#x9760;&amp;#x6D88;&amp;#x606F;&amp;#x4E8B;&amp;#x4EF6;&amp;#x8FBE;&amp;#x5230;&amp;#x6700;&amp;#x7EC8;&amp;#x4E00;&amp;#x81F4;&amp;#x6027;&amp;#x7684;&amp;#x65B9;&amp;#x5F0F;&amp;#x89E3">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/uguesswhoami/pictures/master/%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7.png">
 
 
 
@@ -111,7 +113,7 @@
   };
 </script>
 
-  <title> git命令 | xiaoke's blog </title>
+  <title> 使用最终一致性解决分布式事务问题 | xiaoke's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -251,7 +253,7 @@
             
             
               
-                git命令
+                使用最终一致性解决分布式事务问题
               
             
           </h1>
@@ -263,8 +265,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-01T00:00:00+08:00" content="2015-04-01">
-              2015-04-01
+            <time itemprop="dateCreated" datetime="2016-05-06T00:00:00+08:00" content="2016-05-06">
+              2016-05-06
             </time>
           </span>
 
@@ -277,8 +279,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
+                  <a href="/categories/分布式事务-一致性/" itemprop="url" rel="index">
+                    <span itemprop="name">分布式事务&一致性</span>
                   </a>
                 </span>
 
@@ -293,8 +295,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/04/01/git 命令/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/01/git 命令/" itemprop="commentsCount"></span>
+                <a href="/2016/05/06/最终一致性(1)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/06/最终一致性(1)/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -318,65 +320,44 @@
 
       
         <blockquote>
-<p>git&#x662F;&#x975E;&#x5E38;&#x597D;&#x7528;&#x7684;&#x4EE3;&#x7801;&#x6258;&#x7BA1;&#x5DE5;&#x5177;,github&#x4E5F;&#x662F;&#x4E16;&#x754C;&#x4E0A;&#x6700;&#x4F1F;&#x5927;&#x7684;&#x5F00;&#x6E90;&#x793E;&#x533A;,&#x719F;&#x6089;git&#x547D;&#x4EE4;&#x4F1A;&#x7ED9;&#x5E73;&#x65F6;&#x7684;&#x5DE5;&#x4F5C;&#x5E26;&#x6765;&#x4E8B;&#x534A;&#x529F;&#x500D;&#x7684;&#x6548;&#x679C;&#x3002;</p>
+<p>&#x5206;&#x5E03;&#x5F0F;&#x4E8B;&#x52A1;&#x53EF;&#x4EE5;&#x7528;&#x53EF;&#x9760;&#x6D88;&#x606F;&#x4E8B;&#x4EF6;&#x8FBE;&#x5230;&#x6700;&#x7EC8;&#x4E00;&#x81F4;&#x6027;&#x7684;&#x65B9;&#x5F0F;&#x89E3;&#x51B3;</p>
 </blockquote>
  <a id="more"></a>
+<p>&#x5982;&#x56FE;&#x6240;&#x793A;</p>
+<p><img src="https://raw.githubusercontent.com/uguesswhoami/pictures/master/%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7.png" alt="&#x6700;&#x7EC8;&#x4E00;&#x81F4;&#x6027;.png"></p>
 <ul>
-<li><p>&#x751F;&#x6210;ssh&#x516C;&#x94A5;&#x3001;&#x79D8;&#x94A5;</p>
+<li>&#x5FAE;&#x670D;&#x52A1;1&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;A</li>
+<li>&#x5FAE;&#x670D;&#x52A1;1&#x53D1;&#x9001;&#x6D88;&#x606F;&#x5230;&#x6D88;&#x606F;&#x961F;&#x5217;</li>
+<li>&#x6D88;&#x606F;&#x961F;&#x5217;&#x6301;&#x4E45;&#x5316;&#x6D88;&#x606F;</li>
+<li>&#x5FAE;&#x670D;&#x52A1;2&#x63A5;&#x6536;&#x6D88;&#x606F;&#x5904;&#x7406;&#x5E76;&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;B</li>
+</ul>
+<p><code>&#x5C06;&#x5206;&#x5E03;&#x5F0F;&#x4E8B;&#x52A1;&#x901A;&#x8FC7;&#x6D88;&#x606F;&#x961F;&#x5217;&#x89E3;&#x8026;&#x6210;&#x4E24;&#x4E2A;&#x672C;&#x5730;&#x4E8B;&#x52A1;&#x64CD;&#x4F5C;</code></p>
+<p><code>&#x53EF;&#x80FD;&#x51FA;&#x73B0;&#x7684;&#x95EE;&#x9898;&#xFF1A;</code></p>
+<ul>
+<li>&#x5FAE;&#x670D;&#x52A1;1&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;A&#x5F02;&#x5E38;</li>
+<li>&#x5FAE;&#x670D;&#x52A1;1&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;A&#x6B63;&#x5E38;&#xFF0C;&#x4F46;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x5931;&#x8D25;&#xFF0C;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x5931;&#x8D25;&#x53C8;&#x5206;&#x4E3A;&#x4E24;&#x79CD;&#xFF1A;<ul>
+<li>&#x6D88;&#x606F;&#x961F;&#x5217;&#x5E76;&#x6CA1;&#x6709;&#x6301;&#x4E45;&#x5316;&#x6D88;&#x606F;&#x5C31;&#x5931;&#x8D25;</li>
+<li>&#x6D88;&#x606F;&#x961F;&#x5217;&#x5DF2;&#x7ECF;&#x6301;&#x4E45;&#x5316;&#x6D88;&#x606F;&#x4F46;&#x56E0;&#x7F51;&#x7EDC;&#x5F02;&#x5E38;&#x7B49;&#x539F;&#x56E0;&#x5931;&#x8D25;</li>
+</ul>
+</li>
+<li>&#x5FAE;&#x670D;&#x52A1;2&#x63A5;&#x6536;&#x5230;&#x6D88;&#x606F;&#xFF0C;&#x4F46;&#x662F;&#x5904;&#x7406;&#x6D88;&#x606F;&#x5931;&#x8D25;&#xFF0C;&#x5373;&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;B&#x5931;&#x8D25;</li>
+</ul>
+<p><code>&#x89E3;&#x51B3;&#xFF1A;</code></p>
+<ul>
+<li>&#x5FAE;&#x670D;&#x52A1;1&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;A&#x7684;&#x540C;&#x65F6;&#x64CD;&#x4F5C;&#x672C;&#x5730;&#x4E8B;&#x4EF6;&#x8868;M&#x3002; &#x5FAE;&#x670D;&#x52A1;1&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;A&#xFF0C;&#x5E76;&#x63D2;&#x5165;&#x672C;&#x5730;&#x4E8B;&#x4EF6;&#x8868;&#xFF08;&#x4E24;&#x8005;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x4E8B;&#x52A1;&#x4E2D;&#xFF09;&#xFF0C;&#x5E76;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x6210;&#x529F;&#x5219;&#x5220;&#x9664;&#x672C;&#x5730;&#x65F6;&#x95F4;&#x8868;&#x4E2D;&#x8BE5;&#x4E8B;&#x4EF6;&#xFF0C;&#x4FDD;&#x8BC1;&#x5FAE;&#x670D;&#x52A1;1&#x7684;&#x6D88;&#x606F;&#x53EF;&#x9760;&#x6027;&#x3002;</li>
+<li>&#x540C;&#x65F6;&#x5728;&#x5FAE;&#x670D;&#x52A1;2&#x4FA7;&#x6DFB;&#x52A0;&#x672C;&#x5730;&#x4E8B;&#x4EF6;&#x8868;N&#xFF0C;&#x76EE;&#x524D;&#x5927;&#x591A;&#x6570;&#x6D88;&#x606F;&#x961F;&#x5217;&#x6BD4;&#x5982;Kafka&#x53EF;&#x4EE5;&#x4FDD;&#x8BC1;&#x6D88;&#x606F;&#x81F3;&#x5C11;&#x5230;&#x8FBE;&#x4E00;&#x6B21;&#xFF08;at least once&#xFF09;&#xFF0C;&#x6240;&#x4EE5;&#x6D88;&#x606F;&#x662F;&#x4E00;&#x5B9A;&#x4F1A;&#x5230;&#x8FBE;&#x5FAE;&#x670D;&#x52A1;2&#x4FA7;&#xFF0C;&#x4F46;&#x662F;&#x5FAE;&#x670D;&#x52A1;2&#x4FA7;&#x662F;&#x5426;&#x4EC5;&#x6B63;&#x786E;&#x5904;&#x7406;&#x4E00;&#x6B21;&#xFF0C;&#x8FD9;&#x4E2A;&#x5C31;&#x9700;&#x8981;&#x672C;&#x5730;&#x4E8B;&#x4EF6;&#x8868;N&#x6765;&#x4FDD;&#x8BC1;&#xFF0C;&#x9996;&#x5148;&#x5728;&#x6D88;&#x606F;&#x5230;&#x8FBE;&#x540E;&#xFF0C;&#x67E5;&#x8BE2;&#x4E8B;&#x4EF6;&#x8868;N&#x662F;&#x5426;&#x5904;&#x7406;&#x8FC7;&#x8BE5;&#x4E8B;&#x4EF6;&#xFF0C;&#x5982;&#x679C;&#x5904;&#x7406;&#x8FC7;&#xFF0C;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#xFF0C;&#x786E;&#x4FDD;&#x6D88;&#x606F;&#x5904;&#x7406;&#x7684;&#x5E42;&#x7B49;&#x6027;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5904;&#x7406;&#x8FC7;&#xFF0C;&#x5219;&#x63D2;&#x5165;&#x8BE5;&#x6D88;&#x606F;&#x4E8B;&#x4EF6;&#x5230;&#x6D88;&#x606F;&#x8868;N&#x4E2D;&#xFF0C;&#x5E76;&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;B&#xFF0C;&#x5904;&#x7406;&#x6210;&#x529F;&#x5220;&#x9664;&#x4E8B;&#x4EF6;&#x8868;&#x4E2D;&#x8BE5;&#x4E8B;&#x4EF6;&#x6807;&#x8BB0;&#xFF08;&#x4E0E;&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;B&#x5728;&#x540C;&#x4E00;&#x4E8B;&#x52A1;&#x4E2D;&#xFF09;&#x3002;</li>
+</ul>
+<p><code>&#x590D;&#x76D8;&#x5982;&#x4E0B;&#xFF1A;</code></p>
+<ul>
+<li>&#x5047;&#x8BBE;&#x5FAE;&#x670D;&#x52A1;1&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;A&#x5931;&#x8D25;&#xFF0C;&#x5219;&#x56DE;&#x6EDA;&#x8BE5;&#x64CD;&#x4F5C;&#xFF0C;&#x6B64;&#x65F6;&#x672C;&#x5730;&#x4E8B;&#x4EF6;&#x8868;&#x4E0A;&#x5E76;&#x6CA1;&#x6709;&#x8BE5;&#x4E8B;&#x4EF6;&#xFF0C;&#x76F8;&#x5B89;&#x65E0;&#x4E8B;&#xFF1B;</li>
+<li>&#x5047;&#x8BBE;&#x5FAE;&#x670D;&#x52A1;1&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;A&#x6210;&#x529F;&#xFF0C;&#x6B64;&#x65F6;&#x63D2;&#x5165;&#x4E8B;&#x4EF6;&#x8868;&#x5E76;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x4E8B;&#x4EF6;&#xFF0C;&#x82E5;&#x6D88;&#x606F;&#x961F;&#x5217;&#x5728;&#x6301;&#x4E45;&#x5316;&#x6D88;&#x606F;&#x4E4B;&#x524D;&#x5931;&#x8D25;&#xFF0C;&#x6B64;&#x65F6;&#x4E8B;&#x4EF6;&#x8868;&#x4E2D;&#x4F1A;&#x8BB0;&#x5F55;&#x8BE5;&#x4E8B;&#x4EF6;&#xFF0C;&#x5B9A;&#x65F6;&#x5904;&#x7406;&#x8BE5;&#x8868;&#x4E2D;&#x6570;&#x636E;&#xFF1B;</li>
+<li>&#x5047;&#x8BBE;&#x5FAE;&#x670D;&#x52A1;1&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;A&#x6210;&#x529F;&#xFF0C;&#x6B64;&#x65F6;&#x63D2;&#x5165;&#x4E8B;&#x4EF6;&#x8868;&#x5E76;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x4E8B;&#x4EF6;&#xFF0C;&#x82E5;&#x6D88;&#x606F;&#x961F;&#x5217;&#x5728;&#x6301;&#x4E45;&#x5316;&#x6D88;&#x606F;&#x4E4B;&#x540E;&#x5931;&#x8D25;&#xFF0C;&#x6B64;&#x65F6;&#x4E8B;&#x4EF6;&#x8868;&#x4E2D;&#x540C;&#x6837;&#x4F1A;&#x8BB0;&#x5F55;&#x8BE5;&#x4E8B;&#x4EF6;&#xFF0C;&#x5B9A;&#x65F6;&#x5904;&#x7406;&#x8BE5;&#x8868;&#x4E2D;&#x6570;&#x636E;&#xFF0C;&#x6B64;&#x65F6;&#x53EF;&#x80FD;&#x4F1A;&#x9020;&#x6210;&#x5FAE;&#x670D;&#x52A1;2&#x91CD;&#x590D;&#x5904;&#x7406;&#x6D88;&#x606F;&#xFF0C;&#x56E0;&#x6B64;&#x5FAE;&#x670D;&#x52A1;2&#x8981;&#x505A;&#x597D;&#x5E42;&#x7B49;&#x5904;&#x7406;&#xFF1B;</li>
+<li>&#x5FAE;&#x670D;&#x52A1;1&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;A&#x6210;&#x529F;&#xFF0C;&#x4E14;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x6210;&#x529F;&#xFF0C;&#x6B64;&#x65F6;&#x5220;&#x9664;&#x4E8B;&#x4EF6;&#x8868;&#x4E2D;&#x8BE5;&#x6D88;&#x606F;&#x4E8B;&#x4EF6;&#x8BB0;&#x5F55;&#xFF0C;&#x82E5;&#x5220;&#x9664;&#x8BE5;&#x6D88;&#x606F;&#x4E8B;&#x4EF6;&#x8BB0;&#x5F55;&#x5931;&#x8D25;&#xFF0C;&#x5219;&#x5F53;&#x5B9A;&#x65F6;&#x5904;&#x7406;&#x8BE5;&#x8868;&#x4E2D;&#x6570;&#x636E;&#x65F6;&#x8FD8;&#x662F;&#x4F1A;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7136;&#x540E;&#x5220;&#x9664;&#x8BB0;&#x5F55;&#xFF0C;&#x6B64;&#x65F6;&#x53C8;&#x8981;&#x4FDD;&#x8BC1;&#x5FAE;&#x670D;&#x52A1;2&#x7684;&#x5E42;&#x7B49;&#x63A7;&#x5236;&#x3002;</li>
+</ul>
+<p><code>&#x5176;&#x4E2D;&#x6D88;&#x606F;&#x7684;&#x5FC5;&#x8FBE;&#x6027;&#x7531;&#x6D88;&#x606F;&#x961F;&#x5217;&#x4FDD;&#x8BC1;</code></p>
 <blockquote>
-<p>&#x5173;&#x4E8E;ssh&#x7684;&#x4F5C;&#x7528;&#x53EF;&#x4EE5;<a href="https://segmentfault.com/q/1010000000118744" target="_blank" rel="external">&#x70B9;&#x8FD9;&#x91CC;</a></p>
+<p>&#x65E2;&#x7136;&#x662F;&#x6700;&#x7EC8;&#x4E00;&#x81F4;&#x6027;&#xFF0C;&#x90A3;&#x5728;&#x8FBE;&#x5230;&#x6700;&#x7EC8;&#x4E00;&#x81F4;&#x6027;&#x7684;&#x7A97;&#x53E3;&#x671F;&#x5C31;&#x4F1A;&#x6709;&#x77ED;&#x6682;&#x7684;&#x4E0D;&#x4E00;&#x81F4;&#xFF0C;&#x8FD9;&#x4E2A;&#x53D6;&#x51B3;&#x4E8E;&#x4E8B;&#x4EF6;&#x6D88;&#x606F;&#x7684;&#x6570;&#x91CF;&#xFF0C;&#x6D88;&#x606F;&#x961F;&#x5217;&#x5904;&#x7406;&#x6D88;&#x606F;&#x7684;&#x6027;&#x80FD;&#x53CA;&#x63A5;&#x6536;&#x6D88;&#x606F;&#x7AEF;&#x5904;&#x7406;&#x6D88;&#x606F;&#x7684;&#x6027;&#x80FD;&#x7B49;&#x3002;&#x9002;&#x7528;&#x4E8E;&#x53EF;&#x4EE5;&#x5BB9;&#x5FCD;&#x77ED;&#x6682;&#x4E0D;&#x4E00;&#x81F4;&#x7684;&#x573A;&#x666F;&#x3002;</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;your name&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>&#x4FEE;&#x6539;&#x5168;&#x5C40;&#x7684;&#x7528;&#x6237;&#x540D;&#x3001;&#x90AE;&#x7BB1;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;xxx&quot;</span><br><span class="line"></span><br><span class="line">git config --global user.email &quot;xxx@xxx.xx&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>&#x4FEE;&#x6539;&#x67D0;repo&#x7528;&#x6237;&#x540D;&#x3001;&#x90AE;&#x7BB1;, &#x8FDB;&#x5165;repo&#x4E0B;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config  user.name &quot;xxx&quot;</span><br><span class="line"></span><br><span class="line">git config  user.email &quot;xxx@xxx.xx&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>&#x67E5;&#x770B;&#x7528;&#x6237;&#x540D;&#x3001;&#x90AE;&#x7BB1;&#x7B49;&#x914D;&#x7F6E;&#x4FE1;&#x606F;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>&#x514B;&#x9686;&#x8FDC;&#x7A0B;&#x4EE3;&#x7801;&#x5230;&#x672C;&#x5730;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone &lt;ssh/http&#x8DEF;&#x5F84;&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>&#x6DFB;&#x52A0;&#x6587;&#x4EF6;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;filename&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>&#x6DFB;&#x52A0;&#x5F53;&#x524D;&#x76EE;&#x5F55;&#x6240;&#x6709;&#x6587;&#x4EF6;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>&#x63D0;&#x4EA4;&#x6587;&#x4EF6;&#x5230;&#x672C;&#x5730;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &quot;xxx&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>&#x67E5;&#x770B;&#x5F53;&#x524D;&#x5206;&#x652F;&#x72B6;&#x6001;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>&#x63D0;&#x4EA4;&#x6587;&#x4EF6;&#x5230;&#x670D;&#x52A1;&#x5668;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>&#x66F4;&#x65B0;&#x8FDC;&#x7A0B;&#x5206;&#x652F;&#x5230;&#x672C;&#x5730;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>&#x62C9;&#x53D6;&#x8FDC;&#x7A0B;&#x5206;&#x652F;&#x5230;&#x672C;&#x5730;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull orgin/&lt;&#x5206;&#x652F;&#x540D;&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>&#x5408;&#x5E76;&#x5206;&#x652F;&#x5230;&#x5F53;&#x524D;&#x5206;&#x652F;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge &lt;&#x5206;&#x652F;&#x540D;&#x79F0;&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
 
       
     </div>
@@ -401,16 +382,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/02/14/常用linux 命令/" rel="next" title="linux常用命令">
-                <i class="fa fa-chevron-left"></i> linux常用命令
+              <a href="/2016/05/01/dubbo cache扩展实现/" rel="next" title="dubbo cache 扩展">
+                <i class="fa fa-chevron-left"></i> dubbo cache 扩展
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/01/01/dubbo原理和实践整理/" rel="prev" title="dubbo原理和实践整理">
-                dubbo原理和实践整理 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/05/23/RPC原理简析/" rel="prev" title="RPC原理简析">
+                RPC原理简析 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -437,8 +418,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/04/01/git 命令/"
-           data-title="git命令" data-url="xiaoke.tech/2015/04/01/git 命令/">
+      <div class="ds-thread" data-thread-key="2016/05/06/最终一致性(1)/"
+           data-title="使用最终一致性解决分布式事务问题" data-url="xiaoke.tech/2016/05/06/最终一致性(1)/">
       </div>
     
   </div>
